@@ -1,0 +1,160 @@
+// Fonts
+@import url("https://fonts.bunny.net/css?family=Nunito");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+body {
+    background-color: #eaecff;
+    overflow-x: hidden;
+    // padding: 0;
+}
+
+.navbar .img-fluid {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar .flag {
+    width: 20px;
+    height: 20px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.rounded-circle {
+    width: 300px;
+    height: 300px;
+    font-size: medium;
+    // background-image: url("/public/images/register-circle.jpg");
+}
+
+#sidebarOffcanvas {
+    top: 72px; // height of your navbar
+    height: calc(100% - 72px); // subtract navbar height
+    border: none;
+    width: 315px;
+    z-index: 1019;
+    background-color: white;
+}
+
+.offcanvas-backdrop {
+    position: absolute !important;
+    top: 72px; // Same as navbar height
+    height: calc(100% - 72px);
+    z-index: 1038;
+    display: none;
+
+    &.show {
+        opacity: 1;
+    }
+}
+
+#desktopSidebar {
+    display: none; // Hidden by default
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    position: sticky; /* Keep it positioned correctly */
+    scrollbar-width: thin;
+    top: 0;
+    // width: 315px;
+}
+.card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: scale(1.03);
+    // z-index: 20;
+}
+.card-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.dropdown-menu {
+    background-color: white;
+    border: 0;
+    z-index: 9999 !important;
+}
+
+.bg-info,
+.bg-success,
+.bg-warning {
+    opacity: 0.9;
+}
+
+ul {
+    list-style: none;
+}
+
+.sidebar-navbar a.active {
+    background-color: #eef0ff;
+    color: #4154f1;
+}
+
+.sidebar-navbar a {
+    font-size: 1rem;
+    color: #002351;
+}
+
+.user-card {
+    font-size: 0.9rem;
+}
+
+.card-title {
+    color: #003b89;
+    font-weight: 600;
+}
+
+.table {
+    --bs-table-bg: #ffffff !important; // Ensures white background
+}
+
+.custom-header th {
+    background-color: #dbddfb;
+    // color: white;
+}
+
+.notification-dropdown {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    display: block !important; /* Prevents Bootstrap from hiding it */
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.notification-dropdown.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.notification-dropdown.hiding {
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: white !important; /* Remove blue background when opened */
+    color: #212529; /* Keep default text color */
+}
+
+@media (min-width: 1200px) {
+    #desktopSidebar {
+        display: block;
+
+        &.sidebar-hidden {
+            display: none !important;
+        }
+    }
+}
