@@ -269,7 +269,7 @@ Route::get('/admin/get-subcategories/{id}', [ChildCategoryController::class, 'ge
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/change-password', [PasswordChangeController::class, 'showChangeForm'])->name('password.change');
-    Route::post('/change-password', [PasswordChangeController::class, 'changePassword'])->name('password.update');
+    Route::post('/change-password', [PasswordChangeController::class, 'changePassword'])->name('password.change.submit');
 
     Route::get('/search', [SearchPaperController::class, 'search'])->name('papers.search');
     Route::get('/papers/{id}', [SearchPaperController::class, 'show'])->name('papers.show');

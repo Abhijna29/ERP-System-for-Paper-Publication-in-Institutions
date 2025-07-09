@@ -6,7 +6,7 @@
         <div class="card bg-white border-0 rounded-4 shadow">
             <div class="card-body user-card">
                 <h5 class="card-title mb-3 fw-bold">{{ __('Change Your Password')}}</h5>
-                <form method="POST" action="{{ route('password.update') }}">
+                <form method="POST" action="{{ route('password.change.submit') }}">
                     @csrf
                     <div class="row mb-4">
                         <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
