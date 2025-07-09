@@ -35,26 +35,4 @@ class ResetPasswordController extends Controller
                 return '/login';
         }
     }
-
-    // protected function resetPassword(Authenticatable $user, $password)
-    // {
-    //     Log::info('Resetting password for user: ' . $user->email);
-    //     $user->password = Hash::make($password);
-    //     $user->setRememberToken(Str::random(60));
-    //     $user->save();
-    //     Log::info('Password reset successful, logging in user: ' . $user->email);
-    //     $this->guard()->login($user);
-    // }
-
-    // public function reset(Request $request)
-    // {
-    //     Log::info('Password reset attempt for email: ' . $request->email);
-    //     $response = parent::reset($request);
-    //     Log::info('Password reset response: ' . $response);
-    //     if ($response == Password::PASSWORD_RESET) {
-    //         Log::info('Password reset successful, redirecting to: ' . $this->redirectTo);
-    //         return redirect()->route('home');
-    //     }
-    //     return $response;
-    // }
 }

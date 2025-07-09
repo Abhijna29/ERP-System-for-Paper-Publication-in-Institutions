@@ -34,6 +34,22 @@
         </div>
     @endif
 
+    <h4>Book Chapters (Local)</h4>
+@if ($localChapters->count())
+    @foreach ($localChapters as $chapter)
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{{ $chapter->chapter_title }}</h5>
+                <p>{{ $chapter->abstract }}</p>
+                <a href="{{ route('search.chapter.show', $chapter->id) }}" class="btn btn-sm btn-primary">View</a>
+            </div>
+        </div>
+    @endforeach
+    {{ $localChapters->links() }}
+@else
+    <p>No local book chapters found.</p>
+@endif
+
     <h5 class="mt-5">🌐 {{ __('CrossRef Papers')}}</h5>
     @if(empty($crossRefResults))
     <p>{{ __('No external papers found.')}}</p>

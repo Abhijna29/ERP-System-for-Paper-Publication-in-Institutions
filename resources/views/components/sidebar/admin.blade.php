@@ -52,7 +52,7 @@
          fw-bold text-decoration-none p-2 ps-4 rounded-pill
          {{Route::is('admin.papers') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
-        <span>{{__('Submitted Papers') }}</span>
+        <span>{{ __('Submitted Papers') }}</span>
         </a>
     </li>
     <li class="nav-item mb-1">
@@ -60,7 +60,7 @@
          fw-bold text-decoration-none p-2 ps-4 rounded-pill
          {{Route::is('published.papers') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
-        <span>{{__('List Of Paper Published') }}</span>
+        <span>{{ __('List Of Paper Published') }}</span>
         </a>
     </li>
     

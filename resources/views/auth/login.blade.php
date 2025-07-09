@@ -62,24 +62,13 @@
                                             @endif
                                     </div>
                                 </div>
-
-                                
+                               
                                 <div class="row gap-5 mb-3 ">
                                     <div class="col-12 d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary w-75">
                                         {{ __('Login') }}
                                     </button>
                                 </div>  
-                                </div>
-
-                                {{-- <div class="row mb-0 mt-4 text-center">
-                                    <span>{{__('Don\'t have an account?') }}
-                                        <a href="{{ route('register') }}" >
-                                        {{ __('Create new!') }}
-                                        </a>  
-                                    </span>  
-                                </div>         --}}
-                                
                             </form>
                         </div>
                     </div>

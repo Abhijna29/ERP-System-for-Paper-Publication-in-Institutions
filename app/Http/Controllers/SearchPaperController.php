@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookChapter;
 use App\Models\Download;
 use App\Models\ResearchPaper;
 use Illuminate\Http\Request;
@@ -26,6 +27,14 @@ class SearchPaperController extends Controller
         })
             ->latest()
             ->paginate(5)
+            ->appends(['query' => $query, 'crossref_page' => $crossRefPage]);
+
+        $localChapters = BookChapter::where(function ($q) use ($query) {
+            $q->where('chapter_title', 'like', "%{$query}%")
+                ->orWhere('keywords', 'like', "%{$query}%");
+        })
+            ->latest()
+            ->paginate(5, ['*'], 'chapters_page')
             ->appends(['query' => $query, 'crossref_page' => $crossRefPage]);
 
         // 2. CrossRef API
@@ -64,6 +73,7 @@ class SearchPaperController extends Controller
         return view('dashboard.search_papers.searchResults', compact(
             'query',
             'localPapers',
+            'localChapters',
             'crossRefResults',
             'crossRefPage',
             'crossRefPerPage',
@@ -83,5 +93,15 @@ class SearchPaperController extends Controller
         // Optional: add any authorization if needed, e.g., only allow users to view papers they are allowed to see
 
         return view('dashboard.search_papers.showPaper', compact('paper', 'role', 'alreadyDownloaded'));
+    }
+    public function showChapter($id)
+    {
+        $chapter = BookChapter::with('user')->findOrFail($id);
+        $role = Auth::user()->role;
+        $alreadyDownloaded = Download::where('user_id', Auth::id())
+            ->where('book_chapter_id', $chapter->id)
+            ->exists();
+
+        return view('dashboard.search_papers.showChapter', compact('chapter', 'role', 'alreadyDownloaded'));
     }
 }

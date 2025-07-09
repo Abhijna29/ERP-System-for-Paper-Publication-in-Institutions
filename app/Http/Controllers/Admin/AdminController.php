@@ -18,17 +18,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    
-
     public function listOfPaper()
     {
         $papers = ResearchPaper::where('status', 'published')->with('user', 'category')->oldest()->get();
 
         return view('dashboard.admin.listOfPaper', compact('papers'));
-    }
-    public function generateReport()
-    {
-        return view('dashboard.admin.generateReport');
     }
 
     public function patentFiled()
@@ -102,7 +96,7 @@ class AdminController extends Controller
         }
 
         // Your dashboard logic
-        $papers = ResearchPaper::with('user')->get();
+        $papers = ResearchPaper::with('user')->where('status', '!=', 'published')->get();
         return view('dashboard.admin.papers', compact('papers'));
     }
 

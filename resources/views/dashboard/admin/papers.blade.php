@@ -26,6 +26,7 @@
                 <table class="table table-bordered border-dark-subtle table-hover">
                     <thead class="custom-header">
                         <tr>
+                            <th>{{ __('Id') }}</th>
                             <th>{{ __('Title') }}</th>
                             <th>{{ __('Researcher') }}</th>
                             <th>{{ __('Status') }}</th>
@@ -40,6 +41,7 @@
                             $flaggedReview = $paper->reviews->where('flagged_for_editor', true)->sortByDesc('created_at')->first();
                         @endphp
                         <tr>
+                            <td>{{$loop->iteration}}</td>
                             <td>
                                 {{ $paper->title }}
                                 
@@ -95,7 +97,7 @@
                             <td>
                                 <a href="{{ route('admin.paper.view', $paper->id) }}" class="btn btn-warning btn-sm mb-2" >{{ __('View Paper')}}</a>
                                 @if($paper->status !== 'pending_payment' && $paper->status !== 'ready_to_publish')
-                                    <a href="{{ route('admin.assign.submit', $paper->id) }}" class="btn btn-sm btn-primary mb-2">{{ __('Assign Reviewer') }}</a>
+                                    <a href="{{ route('admin.assign.submit', $paper->id) }}" class="btn btn-sm btn-primary mb-2">{{ __('Assign Reviewers') }}</a>
                                 @endif
 
                                 @if($paper->status === 'approved')

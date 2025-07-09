@@ -71,7 +71,7 @@
          fw-bold text-decoration-none p-2 ps-4 rounded-pill fs-5
          {{Route::is('subscription.mine') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
-         <span>{{__(' My Subscription') }}</span>
+         <span>{{__('My Subscriptions') }}</span>
         </a>
     </li>
 

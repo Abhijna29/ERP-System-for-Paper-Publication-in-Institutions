@@ -52,20 +52,34 @@
 <div class="dropdown me-4">
     <a class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
         @if(app()->getLocale() == 'fr')
-           <img src="{{ asset('images/france.png') }}" alt="" class="flag rounded-circle"> Français
+           <img src="{{ asset('images/france.png') }}" alt="" class="flag rounded-circle"> {{ __('French')}}
+        @elseif (app()->getLocale() == 'hi')
+            <img src="{{ asset('images/india.png') }}" alt="" class="flag rounded-circle"> {{ __('Hindi')}}
+        @elseif (app()->getLocale() == 'es')
+            <img src="{{ asset('images/spain.png') }}" alt="" class="flag rounded-circle"> {{ __('Spanish')}}
         @else
-            <img src="{{ asset('images/united-kingdom.png') }}" alt="" class="flag rounded-circle"> English
+            <img src="{{ asset('images/united-kingdom.png') }}" alt="" class="flag rounded-circle"> {{ __('English')}}
         @endif
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
         <li>
             <a class="dropdown-item d-flex align-items-center gap-2 {{ app()->getLocale() == 'en' ? 'active' : '' }}" href="{{ route('change.language', 'en') }}">
-                <img src="{{ asset('images/united-kingdom.png') }}" alt="" class="flag rounded-circle"> English
+                <img src="{{ asset('images/united-kingdom.png') }}" alt="" class="flag rounded-circle"> {{ __('English')}}
             </a>
         </li>
         <li>
             <a class="dropdown-item d-flex align-items-center gap-2 {{ app()->getLocale() == 'fr' ? 'active' : '' }}" href="{{ route('change.language', 'fr') }}">
-                <img src="{{ asset('images/france.png') }}" alt="" class="flag rounded-circle"> Français
+                <img src="{{ asset('images/france.png') }}" alt="" class="flag rounded-circle"> {{ __('French')}}
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 {{ app()->getLocale() == 'hi' ? 'active' : '' }}" href="{{ route('change.language', 'hi') }}">
+                <img src="{{ asset('images/india.png') }}" alt="" class="flag rounded-circle"> {{ __('Hindi')}}
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 {{ app()->getLocale() == 'es' ? 'active' : '' }}" href="{{ route('change.language', 'es') }}">
+                <img src="{{ asset('images/spain.png') }}" alt="" class="flag rounded-circle"> {{ __('Spanish')}}
             </a>
         </li>
     </ul>

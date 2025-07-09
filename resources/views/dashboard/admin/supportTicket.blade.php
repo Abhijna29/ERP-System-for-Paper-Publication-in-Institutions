@@ -41,7 +41,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.supportTicket.reply', $ticket->ticket_id) }}" class="btn btn-sm btn-primary">Reply</a>
+                                        <a href="{{ route('admin.supportTicket.reply', $ticket->ticket_id) }}" class="btn btn-sm btn-primary">{{ __('Reply')}}</a>
                                     </td>
                                     
                                 </tr>

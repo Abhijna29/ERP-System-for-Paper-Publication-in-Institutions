@@ -25,7 +25,7 @@
                         <option value="">{{ __('All Statuses') }}</option>
                         @foreach (['submitted', 'under_review', 'resubmitted', 'revision_required', 'approved', 'rejected', 'published'] as $stat)
                             <option value="{{ $stat }}" {{ request('status') == $stat ? 'selected' : '' }}>
-                                {{ ucfirst(str_replace('_', ' ', $stat)) }}
+                                {{ __(ucfirst(str_replace('_', ' ', $stat))) }}
                             </option>
                         @endforeach
                     </select>

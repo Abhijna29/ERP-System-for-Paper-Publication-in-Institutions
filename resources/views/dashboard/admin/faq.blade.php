@@ -22,15 +22,15 @@
                         <label for="role">{{ __('Visible To (Role)') }}</label>
                         <select class="form-select" id="role" name="role">
                             <option value="">{{ __('All Roles') }}</option>
-                            <option value="researcher">Researcher</option>
-                            <option value="reviewer">Reviewer</option>
-                            <option value="institution">Institution</option>
-                            <option value="department">Department</option>
+                            <option value="researcher">{{ __('Researcher')}}</option>
+                            <option value="reviewer">{{ __('Reviewer')}}</option>
+                            <option value="institution">{{ __('Institution')}}</option>
+                            <option value="department">{{ __('Department')}}</option>
                         </select>
                         <div id="error-role" class="text-danger"></div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Submit')}}</button>
                     </div>
                 </form>
             </div>
@@ -83,8 +83,8 @@ function fetchFAQs() {
                     <td>${faq.role ? faq.role.charAt(0).toUpperCase() + faq.role.slice(1) : 'All'}</td>
 
                     <td>
-                        <button class="btn btn-sm btn-success edit-btn mb-1" data-id="${faq.id}" data-title="${faq.title}" data-description="${faq.description}" data-role="${faq.role || ''}">Edit</button>
-                        <button class="btn btn-sm btn-danger del-btn" data-id="${faq.id}">Delete</button>
+                        <button class="btn btn-sm btn-success edit-btn mb-1" data-id="${faq.id}" data-title="${faq.title}" data-description="${faq.description}" data-role="${faq.role || ''}">{{ __('Edit')}}</button>
+                        <button class="btn btn-sm btn-danger del-btn" data-id="${faq.id}">{{ __('Delete')}}</button>
                     </td>
                 </tr>`;
         });
@@ -105,8 +105,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const errorTitle = document.getElementById("error-title");
         const errorDesc = document.getElementById("error-description");
 
-        errorTitle.textContent = title ? "" : "Please Enter The Title";
-        errorDesc.textContent = description ? "" : "Please Enter The Description";
+        errorTitle.textContent = title ? "" : "{{ __('Please enter the title') }}";
+errorDesc.textContent = description ? "" : "{{ __('Please enter the description') }}";
+
         if (!title || !description) return;
 
         const method = editingId ? 'PUT' : 'POST';

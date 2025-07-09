@@ -106,6 +106,14 @@
         userForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        const fieldNames = {
+    name: "{{ __('Name') }}",
+    mobile_number: "{{ __('Mobile Number') }}",
+    email: "{{ __('Email ID') }}",
+    password: "{{ __('Password') }}",
+    role: "{{ __('Role') }}",
+    dept: "{{ __('Department') }}"
+};
         const name = document.getElementById("name").value;
         const mobile_number = document.getElementById("mobile_number").value;
         const email = document.getElementById("email").value;
@@ -115,7 +123,7 @@
 
         // Client-side validation
         let hasError = false;
-        const fields = ["name", "mobile_number", "email"];
+        const fields = ["name", "mobile_number", "email",'role','dept'];
         if (!editUserIdInput.value) {
             // Only validate role, dept, and password for create
             fields.push("role");
@@ -123,10 +131,10 @@
             fields.push("password");
         } else if (role === "researcher") {
             if (roleSelect.value === "researcher") {
-        departmentField.style.display = "block";
-    } else {
-        departmentField.style.display = "none";
-    }
+                departmentField.style.display = "block";
+            } else {
+                departmentField.style.display = "none";
+            }
             // For updates, only validate dept if role is researcher
             fields.push("dept");
         }
@@ -140,7 +148,7 @@
                 }
             });
             if (!input.value.trim()) {
-                error.textContent = `Please enter the ${id.replace('_', ' ')}`;
+                error.textContent = '{{ __('Please Enter The')}} ' + fieldNames[id];
                 hasError = true;
             } else {
                 error.textContent = "";

@@ -25,6 +25,7 @@
                 <table class="table table-bordered border-dark-subtle table-hover">
                     <thead class="custom-header">
                         <tr>
+                            <th>{{ __('Id')}}</th>
                             <th>{{ __('Chapter Title')}}</th>
                             <th>{{ __('Author')}}</th>
                             <th>{{ __('Book')}}</th>
@@ -40,6 +41,7 @@
                             $flaggedReview = $chapter->reviews->where('flagged_for_editor', true)->sortByDesc('created_at')->first();
                         @endphp
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $chapter->chapter_title }}
                                 @if($flaggedReview)
                                     <div class="alert alert-danger mt-2 mb-0 p-2">

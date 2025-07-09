@@ -115,7 +115,21 @@ class InstitutionSubscriptionController extends Controller
         $isReviewer = $user->role === 'reviewer';
         $isAssignedReviewer = $isReviewer && method_exists($content, 'reviews') && $content->reviews->where('reviewer_id', $user->id)->isNotEmpty();
 
-        $canDownload = $isPublished || $isAuthor || $isAdminOrInstitution || $isAssignedReviewer;
+        $hasInstitutionSubscription = false;
+        $institutionSubscription = null;
+
+        if ($user->role === 'researcher' && !$isAuthor && $isPublished) {
+            $institutionId = $user->institution_id;
+
+            $institutionSubscription = Subscription::where('user_id', $institutionId)
+                ->where('ends_at', '>=', now())
+                ->latest()
+                ->first();
+
+            $hasInstitutionSubscription = $institutionSubscription !== null;
+        }
+
+        $canDownload = $isPublished || $isAuthor || $isAdminOrInstitution || $isAssignedReviewer || $hasInstitutionSubscription;
 
         if (!$canDownload) {
             return redirect()->back()->with('error', 'You are not authorized to download this content.');
@@ -126,31 +140,20 @@ class InstitutionSubscriptionController extends Controller
             ->where('book_chapter_id', $type === 'chapters' ? $content->id : null)
             ->exists();
 
-        if ($user->role === 'researcher' && !$isAuthor && $isPublished) {
-            $subscription = Subscription::where('user_id', $user->id)
-                ->where('ends_at', '>=', now())
-                ->latest()
-                ->first();
-
-            if (!$subscription) {
-                return back()->with('error', 'You need an active subscription to download.');
+        if ($hasInstitutionSubscription && !$isAuthor && !$alreadyDownloaded) {
+            if ($institutionSubscription->downloads_used >= $institutionSubscription->plan->download_limit) {
+                return back()->with('error', 'Your institution has reached the maximum number of downloads.');
             }
 
-            if (!$alreadyDownloaded) {
-                if ($subscription->downloads_used >= $subscription->plan->download_limit) {
-                    return back()->with('error', 'You have reached your maximum number of downloads.');
-                }
+            $institutionSubscription->downloads_used += 1;
+            $institutionSubscription->save();
 
-                $subscription->downloads_used += 1;
-                $subscription->save();
-
-                Download::create([
-                    'user_id' => $user->id,
-                    'research_paper_id' => $type === 'chapters' ? null : $content->id,
-                    'book_chapter_id' => $type === 'chapters' ? $content->id : null,
-                    'downloaded_at' => now(),
-                ]);
-            }
+            Download::create([
+                'user_id' => $user->id,
+                'research_paper_id' => $type === 'chapters' ? null : $content->id,
+                'book_chapter_id' => $type === 'chapters' ? $content->id : null,
+                'downloaded_at' => now(),
+            ]);
         }
 
         $filePath = storage_path("app/public/{$content->file_path}");
@@ -160,6 +163,7 @@ class InstitutionSubscriptionController extends Controller
 
         return Response::download($filePath, basename($filePath));
     }
+
 
     public function redirectToSubscription()
     {

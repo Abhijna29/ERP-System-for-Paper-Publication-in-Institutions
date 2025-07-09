@@ -29,17 +29,17 @@
                 <form action="{{ route('researcher.book-chapters.store')}}" method="POST" enctype="multipart/form-data" id="form">
                     @csrf
                     <div class="row g-2 mb-3">
-                        <label for="chapter_title">{{ __('Chapter Title:')}}</label>
+                        <label for="chapter_title">{{ __('Chapter Title')}}:</label>
                         <input type="text" class="form-control w-100 @error('chapter_title') is-invalid @enderror" name="chapter_title" id="chapter_title" value="{{ old('chapter_title') }}">
                         <div id="error-chapter_title" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="keywords">{{ __('Keywords:')}}</label> <!-- Fixed for attribute -->
+                        <label for="keywords">{{ __('Keywords')}}:</label> <!-- Fixed for attribute -->
                         <input type="text" class="form-control w-100 @error('keywords') is-invalid @enderror" name="keywords" id="keywords" value="{{ old('keywords') }}">
                         <div id="error-keywords" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="genre">{{ __('Select Genre:') }}</label>
+                        <label for="genre">{{ __('Select Genre') }}:</label>
                         <select class="form-control w-100" name="genre" id="genre">
                             <option value="">{{ __('Select Genre')}}</option>
                             @foreach($genres as $genre)
@@ -49,7 +49,7 @@
                         <div id="error-genre" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="book_id">{{ __('Select Book:') }}</label>
+                        <label for="book_id">{{ __('Select Book') }}:</label>
                         <select class="form-control w-100" name="book_id" id="book_id">
                             <option value="">{{ __('Select Book')}}</option>
                             {{-- Options will be loaded dynamically --}}
@@ -57,7 +57,7 @@
                         <div id="error-book_id" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="chapter_file">{{ __('Upload Chapter (PDF):')}}</label>
+                        <label for="chapter_file">{{ __('Upload Chapter (PDF)')}}:</label>
                         <input type="file" class="form-control w-100 @error('chapter_file') is-invalid @enderror" name="chapter_file" id="chapter_file" value="{{ old('chapter_file') }}" accept="application/pdf">
                         <div id="error-chapter_file" class="text-danger">
                             @error('chapter_file')

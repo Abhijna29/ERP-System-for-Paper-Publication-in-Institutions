@@ -9,7 +9,7 @@
 
                 <form id="form">
                     <div class="row g-2 mb-3">
-                        <label for="investor">{{ __('Investors Name:')}}</label>
+                        <label for="investor">{{ __('Investors Name')}}:</label>
                         <div class="col-lg-3">
                             <input type="text" class="form-control w-100" placeholder="{{ __('First Name')}}">
                         </div>
@@ -26,12 +26,12 @@
                         <div id="error-title" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="desc">{{ __('Work Description:')}}</label>
+                        <label for="desc">{{ __('Work Description')}}:</label>
                         <textarea type="text" class="form-control w-100" name="desc" id="desc"></textarea>                    
                         <div id="error-desc" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="name">{{ __('Year:')}}</label>
+                        <label for="name">{{ __('Year')}}:</label>
                         <input type="text" class="form-control w-100" name="name" id="year">                    
                         <div id="error-year" class="text-danger"></div>
                     </div>
@@ -56,8 +56,8 @@
 
         const fieldNames = {
        title: @json(__('Work Title')),
-    desc: @json(__('Work Description:')),
-    year: @json(__('Year:')),
+    desc: @json(__('Work Description')),
+    year: @json(__('Year')),
     number: @json(__('Publication Number')),
     grant: @json(__('Grant Patent Number')),
     copy_number: @json(__('Copyright Number')),
@@ -81,7 +81,7 @@
             });
 
             if (!input.value.trim()) {
-                error.textContent = `Please Enter The ${fieldNames[id]}`;
+                error.textContent = `{{ __('Please Enter The')}} ${fieldNames[id]}`;
                 hasError = true;
                 hasError = true;
             } else {

@@ -227,9 +227,6 @@ Route::middleware(['auth', 'force.password.change', 'role:institution'])->prefix
     Route::post('/subscription/payment-success', [InstitutionSubscriptionController::class, 'paymentSuccess'])->name('subscription.payment.success');
     Route::get('/subscription/my-subscriptions', [InstitutionSubscriptionController::class, 'mySubscriptions'])->name('subscription.mine');
     Route::get('/subscribe-required', [InstitutionSubscriptionController::class, 'redirectToSubscription'])->name('papers.redirectToSubscription');
-    Route::get('/{type}/{id}/download', [InstitutionSubscriptionController::class, 'download'])
-        ->where('type', 'papers|chapters')
-        ->name('submission.download');
 });
 
 Route::middleware(['auth', 'force.password.change', 'role:department'])->prefix('department')->group(function () {
@@ -273,9 +270,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/search', [SearchPaperController::class, 'search'])->name('papers.search');
     Route::get('/papers/{id}', [SearchPaperController::class, 'show'])->name('papers.show');
+    Route::get('/search/chapter/{id}', [SearchPaperController::class, 'showChapter'])->name('search.chapter.show');
 
 
-
+    Route::get('/{type}/{id}/download', [InstitutionSubscriptionController::class, 'download'])
+        ->where('type', 'papers|chapters')
+        ->name('submission.download');
     // Support Ticket
     Route::get('user/support-tickets', [SupportTicketController::class, 'userTickets'])->name('supportTickets.index');
     Route::get('user/support-tickets/create', [SupportTicketController::class, 'create'])->name('supportTickets.create');

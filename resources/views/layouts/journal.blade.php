@@ -53,37 +53,37 @@
                         <div id="error-author" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="publication_date">{{ __('Publication Date:') }}</label>
+                        <label for="publication_date">{{ __('Publication Date') }}:</label>
                         <input type="date" class="form-control w-100" name="publication_date" id="publication_date" placeholder="Enter year" value="{{ old('publication_date') }}">
                         <div id="error-publication_date" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="title">{{ __('Title of the Study:') }}</label>
+                        <label for="title">{{ __('Title of the Study') }}:</label>
                         <input type="text" class="form-control w-100" name="title" id="title" value="{{ old('title') }}">
                         <div id="error-title" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="source">{{ __('Source / Journal name:') }}</label>
+                        <label for="source">{{ __('Source / Journal name') }}:</label>
                         <input type="text" class="form-control w-100" name="source" id="source" value="{{ old('source') }}">
                         <div id="error-source" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="volume">{{ __('Volume Number:') }}</label>
+                        <label for="volume">{{ __('Volume Number') }}:</label>
                         <input type="text" class="form-control w-100" name="volume" id="volume" value="{{ old('volume') }}">
                         <div id="error-volume" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="issue">{{ __('Issue Number:') }}</label>
+                        <label for="issue">{{ __('Issue Number') }}:</label>
                         <input type="text" class="form-control w-100" name="issue" id="issue" value="{{ old('issue') }}">
                         <div id="error-issue" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="page">{{ __('Page Range:') }}</label>
+                        <label for="page">{{ __('Page Range') }}:</label>
                         <input type="text" class="form-control w-100" name="page" id="page" value="{{ old('page') }}">
                         <div id="error-page" class="text-danger"></div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="doi">{{ __('DOI:') }}</label>
+                        <label for="doi">{{ __('DOI') }}:</label>
                         <input type="text" class="form-control w-100" name="doi" id="doi" value="{{ old('doi') }}">
                         <div id="error-doi" class="text-danger"></div>
                     </div>
@@ -95,19 +95,19 @@
                         </label>
                     </div>
                     <div id="collaborationFields" style="display: none;">
-                        <h5 class="my-4">{{ __('This publication is in collaboration with:')}}</h5>
+                        <h5 class="my-4">{{ __('This publication is in collaboration with')}}:</h5>
                         <div class="row">
                             <div class="col-lg-6 my-2">
                                 <label class="mb-3"> {{ __('a. Foreign University/Institution')}} </label>
                                 <div class="row mb-3">
-                                    <label for="author_foreign">{{ __('Name of the Author:')}} </label>
+                                    <label for="author_foreign">{{ __('Name of the Author')}}: </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control w-100" name="author_foreign" id="author_foreign" value="{{ old('author_foreign') }}">
                                         <div id="error-author_foreign" class="text-danger"></div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="affiliation_foreign">{{ __('Affiliation:')}} </label>
+                                    <label for="affiliation_foreign">{{ __('Affiliation')}}: </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control w-100" name="affiliation_foreign" id="affiliation_foreign" value="{{ old('affiliation_foreign') }}">
                                         <div id="error-affiliation_foreign" class="text-danger"></div>
@@ -115,16 +115,16 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 my-2">
-                                <label class="mb-3">{{ __('b. Other Indian University/institution ')}}</label>
+                                <label class="mb-3">{{ __('b. Other Indian University/institution')}}</label>
                                 <div class="row mb-3">
-                                    <label for="author_indian">{{ __('Name of the Author:')}} </label>
+                                    <label for="author_indian">{{ __('Name of the Author')}} :</label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control w-100" name="author_indian" id="author_indian" value="{{ old('author_indian') }}">
                                         <div id="error-author_indian" class="text-danger"></div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="affiliation_indian">{{ __('Affiliation:')}} </label>
+                                    <label for="affiliation_indian">{{ __('Affiliation')}}: </label>
                                     <div class="col-lg-9">
                                         <input type="text" class="form-control w-100" name="affiliation_indian" id="affiliation_indian" value="{{ old('affiliation_indian') }}">
                                         <div id="error-affiliation_indian" class="text-danger"></div>
