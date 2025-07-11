@@ -15,28 +15,32 @@ Artisan::command('inspire', function () {
 Schedule::call(function () {
     $today = now()->startOfDay();
     $upcoming = $today->copy()->addDays(3);
+    $yesterday = $today->copy()->subDay();
 
-    // Notify paper reviewers with deadline between today and next 3 days
+    // ✅ Upcoming deadlines (today to +3 days)
     Review::whereDate('deadline', '>=', $today)
         ->whereDate('deadline', '<=', $upcoming)
         ->where('status', 'pending')
-        ->with('reviewer', 'researchPaper')
+        ->with(['reviewer', 'researchPaper'])
         ->get()
-        ->each(function ($review) {
-            if ($review->reviewer) {
+        ->each(function ($review) use ($today) {
+            if ($review->reviewer && (!$review->last_notified_at || !$review->last_notified_at->isSameDay($today))) {
                 $review->reviewer->notify(new ReviewDeadlineNotification($review, 'paper'));
+                $review->update(['last_notified_at' => $today]);
             }
         });
 
-    // Notify chapter reviewers with deadline between today and next 3 days
-    BookChapterReviews::whereDate('deadline', '>=', $today)
-        ->whereDate('deadline', '<=', $upcoming)
+    // ✅ Missed yesterday
+    Review::whereDate('deadline', '=', $yesterday)
         ->where('status', 'pending')
-        ->with('reviewer', 'bookChapter')
+        ->with(['reviewer', 'researchPaper'])
         ->get()
-        ->each(function ($review) {
-            if ($review->reviewer) {
-                $review->reviewer->notify(new ReviewDeadlineNotification($review, 'chapter'));
+        ->each(function ($review) use ($today) {
+            if ($review->reviewer && (!$review->last_notified_at || !$review->last_notified_at->isSameDay($today))) {
+                $review->reviewer->notify(new ReviewDeadlineNotification($review, 'paper'));
+                $review->update(['last_notified_at' => $today]);
             }
         });
-})->daily(); // For testing; use daily() in production
+
+    // Repeat similarly for BookChapterReviews if needed
+})->everyMinute(); // switch back to daily() in production

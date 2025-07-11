@@ -33,7 +33,6 @@ class ReviewerController extends Controller
         return view('dashboard.reviewer.papers', compact('reviews'));
     }
 
-
     public function showReviewForm($type, $id, Request $request)
     {
         // $type = $request->get('type', 'paper');
@@ -42,6 +41,11 @@ class ReviewerController extends Controller
             $review = BookChapterReviews::where('reviewer_id', Auth::id())
                 ->where('book_chapter_id', $id)
                 ->firstOrFail();
+            $today = now()->startOfDay();
+            if (!$review->deadline || $today->gt(\Carbon\Carbon::parse($review->deadline)->startOfDay())) {
+                return redirect()->route('reviewer.reviews', ['type' => $type])
+                    ->with('error', 'The deadline has passed. You can no longer access the review form.');
+            }
 
             // return view('dashboard.reviewer.chapterReviewForm', compact('review'));
         } else {
@@ -49,9 +53,13 @@ class ReviewerController extends Controller
                 ->where('research_paper_id', $id)
                 ->firstOrFail();
         }
+        $today = now()->startOfDay();
+        if (!$review->deadline || $today->gt(\Carbon\Carbon::parse($review->deadline)->startOfDay())) {
+            return redirect()->route('reviewer.reviews', ['type' => $type])
+                ->with('error', 'The deadline has passed. You can no longer access the review form.');
+        }
         return view('dashboard.reviewer.reviewerForm', compact('review', 'type'));
     }
-
 
     public function submitReview(Request $request, $type, $id)
     {
@@ -66,14 +74,6 @@ class ReviewerController extends Controller
                 ->where('book_chapter_id', $id)
                 ->firstOrFail();
 
-            $today = now()->startOfDay();
-            $deadlineDate = \Carbon\Carbon::parse($review->deadline)->startOfDay();
-
-            if ($today->gt($deadlineDate)) {
-                return redirect()->route('reviewer.reviews', ['type' => $type])
-                    ->with('error', 'The deadline has passed. You can no longer submit this review.');
-            }
-
             // Find the review and update it
             $review = BookChapterReviews::where('reviewer_id', Auth::id())
                 ->where('book_chapter_id', $id)
@@ -84,7 +84,7 @@ class ReviewerController extends Controller
             $review->save();
 
             // Update chapter status based on all reviews
-            $chapter = $review->bookChapter; // Make sure the relationship is defined and loaded
+            $chapter = $review->bookChapter;
             $allReviews = BookChapterReviews::where('book_chapter_id', $id)->get();
 
             if ($allReviews->contains('status', 'rejected')) {
@@ -132,14 +132,6 @@ class ReviewerController extends Controller
             $review = Review::where('reviewer_id', Auth::id())
                 ->where('research_paper_id', $id)
                 ->firstOrFail();
-            $today = now()->startOfDay();
-            $deadlineDate = \Carbon\Carbon::parse($review->deadline)->startOfDay();
-
-            if ($today->gt($deadlineDate)) {
-                return redirect()->route('reviewer.reviews', ['type' => $type])
-                    ->with('error', 'The deadline has passed. You can no longer submit this review.');
-            }
-
 
             $review->fill($request->only(['comments', 'rating', 'status']));
             $review->flagged_for_editor = $request->has('flagged_for_editor');

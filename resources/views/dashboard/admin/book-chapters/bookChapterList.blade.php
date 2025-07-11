@@ -63,26 +63,11 @@
                             <td>
                             @php
                                 $reviews = $chapter->reviews;
-
-                                // Check if any review is still pending or resubmitted
-                                $isStillReviewing = $reviews->contains(fn($r) => in_array($r->status, ['pending', 'resubmitted']));
-
-                                $priorityStatus = ['revision_required', 'rejected', 'approved'];
-                                $relevantComment = null;
-
-                                if (!$isStillReviewing) {
-                                    foreach ($priorityStatus as $status) {
-                                        $filtered = $reviews->where('status', $status)->sortByDesc(fn($r) => strlen($r->comments));
-                                        if ($filtered->isNotEmpty()) {
-                                            $relevantComment =  $filtered->first()->comments;
-                                            break;
-                                        }
-                                    }
-                                }
                             @endphp
-
-                            @if ($relevantComment)
-                                {{ $relevantComment }}
+                               @if ($reviews)
+                                 @foreach ($reviews as $review)
+                                    <li>{{ $review->comments }}</li>
+                                @endforeach
                             @else
                                 <em>{{ __('Pending')}}</em>
                             @endif

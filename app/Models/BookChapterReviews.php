@@ -20,6 +20,10 @@ class BookChapterReviews extends Model
     {
         return $this->belongsTo(BookChapter::class, 'book_chapter_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(BookChapterReviews::class, 'book_chapter_id');
+    }
 
     public function reviewer()
     {

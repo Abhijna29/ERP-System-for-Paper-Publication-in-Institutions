@@ -21,6 +21,7 @@
                         <tr>
                             <th>{{ __('Chapter Title')}}</th>
                             <th>{{ __('Action')}}</th>
+                            <th>{{ __('Deadline')}}</th>
                             <th>{{ __('Status')}}</th>
                             <th>{{ __('Resubmission Count')}}</th>
                         </tr>
@@ -34,6 +35,13 @@
                                         <span class="text-success">Submitted</span>
                                     @else
                                        <a href="{{ route('reviewer.reviewForm', ['type' => 'chapter', 'id' => $review->book_chapter_id]) }}" class="btn btn-sm btn-primary">{{ __('Submit Review')}}</a>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($review->deadline)
+                                        {{ \Carbon\Carbon::parse($review->deadline)->format('d M Y') }}
+                                    @else
+                                        <em>{{ __('Not set') }}</em>
                                     @endif
                                 </td>
                                 <td>

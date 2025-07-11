@@ -10,7 +10,7 @@
     @endif
 
     @if(session('error'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">{{ session('error') }}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">{{ session('error') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
@@ -28,6 +28,7 @@
                         <tr>
                             <th>{{ __('Paper Title')}}</th>
                             <th>{{ __('Action')}}</th>
+                            <th>{{ __('Deadline')}}</th>
                             <th>{{ __('Status')}}</th>
                             <th>{{ __('Resubmission Count')}}</th>
                         </tr>
@@ -41,6 +42,13 @@
                                         <span class="text-success">Submitted</span>
                                     @else
                                         <a href="{{ route('reviewer.reviewForm', ['type' => 'paper', 'id' => $review->research_paper_id]) }}" class="btn btn-sm btn-primary">{{ __('Submit Review')}}</a>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($review->deadline)
+                                        {{ \Carbon\Carbon::parse($review->deadline)->format('d M Y') }}
+                                    @else
+                                        <em>{{ __('Not set') }}</em>
                                     @endif
                                 </td>
                                 <td>

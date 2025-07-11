@@ -13,6 +13,7 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
+        "openai-php/client": "^0.14.0",
         "razorpay/razorpay": "^2.9"
     },
     "require-dev": {
