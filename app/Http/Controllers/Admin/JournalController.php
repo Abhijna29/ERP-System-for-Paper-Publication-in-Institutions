@@ -15,62 +15,62 @@ class JournalController extends Controller
     public function scopusSelect()
     {
         $papers = ResearchPaper::where('status', 'ready_to_publish')->get();
-        return view('dashboard.admin.scopus', compact('papers'));
+        return view('dashboard.admin.journals.scopus', compact('papers'));
     }
 
     public function scopus($paperId)
     {
         $paper = ResearchPaper::findOrFail($paperId);
         $papers = ResearchPaper::where('status', 'ready_to_publish')->get();
-        return view('dashboard.admin.scopus', compact('paper', 'papers'));
+        return view('dashboard.admin.journals.scopus', compact('paper', 'papers'));
     }
 
     public function webOfScienceSelect()
     {
         $papers = ResearchPaper::where('status', 'ready_to_publish')->get();
-        return view('dashboard.admin.webOfScience', compact('papers'));
+        return view('dashboard.admin.journals.webOfScience', compact('papers'));
     }
 
     public function webOfScience($paperId)
     {
         $paper = ResearchPaper::findOrFail($paperId);
-        return view('dashboard.admin.webOfScience', compact('paper'));
+        return view('dashboard.admin.journals.webOfScience', compact('paper'));
     }
 
     public function pubMedSelect()
     {
         $papers = ResearchPaper::where('status', 'ready_to_publish')->get();
-        return view('dashboard.admin.pubMed', compact('papers'));
+        return view('dashboard.admin.journals.pubMed', compact('papers'));
     }
 
     public function pubMed($paperId)
     {
         $paper = ResearchPaper::findOrFail($paperId);
-        return view('dashboard.admin.pubMed', compact('paper'));
+        return view('dashboard.admin.journals.pubMed', compact('paper'));
     }
 
     public function abdcSelect()
     {
         $papers = ResearchPaper::where('status', 'ready_to_publish')->get();
-        return view('dashboard.admin.abdc', compact('papers'));
+        return view('dashboard.admin.journals.abdc', compact('papers'));
     }
 
     public function abdc($paperId)
     {
         $paper = ResearchPaper::findOrFail($paperId);
-        return view('dashboard.admin.abdc', compact('paper'));
+        return view('dashboard.admin.journals.abdc', compact('paper'));
     }
 
     public function otherSelect()
     {
         $papers = ResearchPaper::where('status', 'ready_to_publish')->get();
-        return view('dashboard.admin.other', compact('papers'));
+        return view('dashboard.admin.journals.other', compact('papers'));
     }
 
     public function other($paperId)
     {
         $paper = ResearchPaper::findOrFail($paperId);
-        return view('dashboard.admin.other', compact('paper'));
+        return view('dashboard.admin.journals.other', compact('paper'));
     }
 
     public function store(Request $request)

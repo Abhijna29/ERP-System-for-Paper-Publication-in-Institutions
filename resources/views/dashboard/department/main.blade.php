@@ -1,3 +1,4 @@
+{{-- Department Dashboard --}}
 @extends('layouts.department')
 
 @section('content')
@@ -177,9 +178,6 @@
             xaxis: {
                 categories: @json($categories),
                 title: { text: '{{ __('Last 10 days')}}' },
-                // labels: {
-                //     rotate: -45  // Negative value tilts counterclockwise
-                // }
             },
             tooltip: {
                 shared: true,

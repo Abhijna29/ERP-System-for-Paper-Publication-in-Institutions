@@ -1,3 +1,4 @@
+{{-- Researcher Dashboard --}}
 @extends('layouts.researcher')
 
 @section('content')
@@ -144,12 +145,6 @@
             <div class="card-body">
                 <h5 class="pb-3 card-title fw-bold">
                     {{ __('Activity Report') }}
-                    {{-- <span class="text-secondary fw-medium">| 
-                        @if ($filter == 'today') {{ __('Today') }}
-                        @elseif ($filter == 'year') {{ __('This Year') }}
-                        @else {{ __('This Month') }}
-                        @endif
-                    </span> --}}
                 </h5>
                 <div id="chart">
                 </div>
@@ -188,9 +183,6 @@
             xaxis: {
                 categories: @json($categories),
                 title: { text: '{{ __('Last 10 days')}}' },
-                // labels: {
-                //     rotate: -45  // Negative value tilts counterclockwise
-                // }
             },
             tooltip: {
                 shared: true,

@@ -1,3 +1,4 @@
+{{-- Institution dashboard --}}
 @extends('layouts.institution')
 
 @section('content')

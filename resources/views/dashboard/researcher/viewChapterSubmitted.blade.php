@@ -41,7 +41,6 @@
                         <td>
                             @php
                                 $reviews = $chapter->reviews;
-
                                 // // Check if any review is still pending or resubmitted
                                 // $isStillReviewing = $reviews->contains(fn($r) => in_array($r->status, ['pending', 'resubmitted']));
 
@@ -125,6 +124,3 @@
 </div>
  
 @endsection
-
-
-{{-- Delete the reviewSummary related controller and service. --}}
