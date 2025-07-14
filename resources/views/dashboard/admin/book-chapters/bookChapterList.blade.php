@@ -57,20 +57,42 @@
                                     </form>
                                 @endif
                             </td>
-                            <td>{{ $chapter->user->name }}</td>
+                            <td>
+                                <strong>Main Author:</strong> {{ $chapter->user->name }}<br>    
+                                @php
+                                    $collabs = $chapter->collaborations ?? [];
+                                    $foreign = $collabs['foreign'] ?? [];
+                                    $indian = $collabs['indian'] ?? [];
+                                    $validForeign = collect($foreign)->filter(fn($f) => !empty($f['author']));
+                                    $validIndian = collect($indian)->filter(fn($i) => !empty($i['author']));
+                                @endphp
+
+                                @if($validForeign->count() || $validIndian->count())
+                                    <strong>Co-Authors:</strong>
+                                    <ul class="mb-0 ps-3">
+                                        @foreach ($validForeign as $f)
+                                            <li>{{ $f['author'] }} <small class="text-muted">(Foreign)</small></li>
+                                        @endforeach
+                                        @foreach ($validIndian as $i)
+                                            <li>{{ $i['author'] }} <small class="text-muted">(Indian)</small></li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </td>
                             <td>{{ $chapter->book->title ?? 'N/A' }}</td>
                             <td>{{ ucwords(str_replace('_', ' ',$chapter->status)) }}</td>
                             <td>
-                            @php
-                                $reviews = $chapter->reviews;
-                            @endphp
-                               @if ($reviews)
-                                 @foreach ($reviews as $review)
-                                    <li>{{ $review->comments }}</li>
-                                @endforeach
-                            @else
-                                <em>{{ __('Pending')}}</em>
-                            @endif
+                                @php
+                                    $reviews = $chapter->reviews;
+                                @endphp
+
+                                @if ($reviews->isEmpty())
+                                    <em>{{ __('Pending') }}</em>
+                                @else
+                                    @foreach ($reviews as $review)
+                                        {{ $review->comments }}
+                                    @endforeach
+                                @endif
                         </td>
                             <td>
                                 @forelse ($chapter->reviews as $review)

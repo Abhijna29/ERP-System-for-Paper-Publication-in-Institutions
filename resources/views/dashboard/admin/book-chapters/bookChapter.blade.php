@@ -16,7 +16,7 @@
                         <select id="chapterSelect" class="form-select mb-3" required>
                             <option value="" disabled selected>{{ __('Select a chapter')}}</option>
                             @foreach($chapters as $chapter)
-                                <option value="{{ $chapter->id }}" data-chapter_title="{{ $chapter->chapter_title }}" data-author="{{ $chapter->user->name }}" data-book_title="{{ $chapter->book->title ?? '' }}">
+                                <option value="{{ $chapter->id }}" data-chapter_title="{{ $chapter->chapter_title }}" data-author="{{ $chapter->user->name }}" data-book_title="{{ $chapter->book->title ?? '' }}" data-collab='@json($chapter->collaborations)'>
                                     {{ $chapter->chapter_title }} (By: {{ $chapter->user->name }})
                                 </option>
                             @endforeach
@@ -35,16 +35,10 @@
                         <label for="author">{{ __('Author') }}</label>
                         <div id="authorsContainer">
                             <div class="row g-2 mb-3 author-row">
-                                <div class="col-lg-3">
-                                    <input type="text" name="author_first_names[]" class="form-control w-100" placeholder="First name" value="{{ old('author_first_names.0') }}">
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="text" name="author_middle_names[]" class="form-control w-100" placeholder="Middle name" value="{{ old('author_middle_names.0') }}">
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="text" name="author_last_names[]" class="form-control w-100" placeholder="Last name" value="{{ old('author_last_names.0') }}">
-                                </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-9">
+    <input type="text" name="authors[]" class="form-control w-100" placeholder="Full Author Name">
+</div>
+<div class="col-lg-3">
                                     <button type="button" class="btn btn-primary btn-add-author"><i class="fa-solid fa-plus"></i></button>
                                     <button type="button" class="btn btn-danger btn-remove-author" style="display: none;"><i class="fa-solid fa-minus"></i></button>
                                 </div>
@@ -72,52 +66,6 @@
                         <input type="text" class="form-control w-100" name="doi" id="doi" value="{{ old('doi') }}">
                         <div id="error-doi" class="text-danger"></div>
                     </div>
-
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="collaborationCheckbox">
-                        <label class="form-check-label" for="collaborationCheckbox">
-                            {{ __('This publication has collaborations')}}
-                        </label>
-                    </div>
-                    <div id="collaborationFields" style="display: none;">
-                        <h5 class="my-4">{{ __('This publication is in collaboration with:')}}</h5>
-                        <div class="row">
-                            <div class="col-lg-6 my-2">
-                                <label class="mb-3"> {{ __('a. Foreign University/Institution')}} </label>
-                                <div class="row mb-3">
-                                    <label for="author_foreign">{{ __('Name of the Author:')}} </label>
-                                    <div class="col-lg-9">
-                                        <input type="text" class="form-control w-100" name="author_foreign" id="author_foreign" value="{{ old('author_foreign') }}">
-                                        <div id="error-author_foreign" class="text-danger"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="affiliation_foreign">{{ __('Affiliation:')}} </label>
-                                    <div class="col-lg-9">
-                                        <input type="text" class="form-control w-100" name="affiliation_foreign" id="affiliation_foreign" value="{{ old('affiliation_foreign') }}">
-                                        <div id="error-affiliation_foreign" class="text-danger"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 my-2">
-                                <label class="mb-3">{{ __('b. Other Indian University/institution')}} </label>
-                                <div class="row mb-3">
-                                    <label for="author_indian">{{ __('Name of the Author:')}} </label>
-                                    <div class="col-lg-9">
-                                        <input type="text" class="form-control w-100" name="author_indian" id="author_indian" value="{{ old('author_indian') }}">
-                                        <div id="error-author_indian" class="text-danger"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="affiliation_indian">{{ __('Affiliation:')}} </label>
-                                    <div class="col-lg-9">
-                                        <input type="text" class="form-control w-100" name="affiliation_indian" id="affiliation_indian" value="{{ old('affiliation_indian') }}">
-                                        <div id="error-affiliation_indian" class="text-danger"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">{{ __('Submit')}}</button>
                     </div>
@@ -141,77 +89,64 @@
         function resetAuthorRows() {
             authorsContainer.innerHTML = `
                 <div class="row g-2 mb-3 author-row">
-                    <div class="col-lg-3">
-                        <input type="text" name="author_first_names[]" class="form-control w-100" placeholder="First name">
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" name="author_middle_names[]" class="form-control w-100" placeholder="Middle name">
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" name="author_last_names[]" class="form-control w-100" placeholder="Last name">
-                    </div>
-                    <div class="col-lg-3">
-                        <button type="button" class="btn btn-primary btn-add-author"><i class="fa-solid fa-plus"></i></button>
-                        <button type="button" class="btn btn-danger btn-remove-author" style="display: none;"><i class="fa-solid fa-minus"></i></button>
-                    </div>
-                </div>
+    <div class="col-lg-9">
+        <input type="text" name="authors[]" class="form-control w-100" placeholder="Full Author Name">
+    </div>
+    <div class="col-lg-3">
+        <button type="button" class="btn btn-primary btn-add-author"><i class="fa-solid fa-plus"></i></button>
+        <button type="button" class="btn btn-danger btn-remove-author" style="display: none;"><i class="fa-solid fa-minus"></i></button>
+    </div>
+</div>
             `;
             updateButtonsVisibility();
-        }
-
-        // Function to parse author name
-        function parseAuthorName(fullName) {
-            const nameParts = fullName.trim().split(/\s+/);
-            let firstName = '';
-            let middleName = '';
-            let lastName = '';
-
-            if (nameParts.length === 1) {
-                firstName = nameParts[0];
-            } else if (nameParts.length === 2) {
-                firstName = nameParts[0];
-                lastName = nameParts[1];
-            } else if (nameParts.length >= 3) {
-                firstName = nameParts[0];
-                lastName = nameParts[nameParts.length - 1];
-                middleName = nameParts.slice(1, -1).join(' ');
-            }
-
-            return { firstName, middleName, lastName };
         }
 
         // Show/hide form and autofill fields based on chapter selection
         if (chapterSelect) {
             chapterSelect.addEventListener('change', () => {
-                if (chapterSelect.value) {
-                    const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
-                    const chapter_title = selectedOption.getAttribute('data-chapter_title');
-                    const authorName = selectedOption.getAttribute('data-author');
+                const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
+                const title = selectedOption.getAttribute('data-chapter_title');
+                const mainAuthor = selectedOption.getAttribute('data-author');
+                const collabJSON = selectedOption.getAttribute('data-collab');
 
-                    // Show form and update hidden input
-                    form.style.display = 'block';
-                    chapterIdInput.value = chapterSelect.value;
+                form.style.display = 'block';
+                chapterIdInput.value = chapterSelect.value;
+                titleInput.value = title || '';
+                authorsContainer.innerHTML = ''; // Clear existing
 
-                    // Reset author rows
-                    resetAuthorRows();
+                // Add main author
+                authorsContainer.insertAdjacentHTML('beforeend', createAuthorInput(mainAuthor));
 
-                    // Autofill title and author fields
-                    titleInput.value = chapter_title || '';
+                // Add co-authors
+                try {
+                    const collaborators = JSON.parse(collabJSON || '{}');
+                    const foreignAuthors = collaborators.foreign || [];
+                    const indianAuthors = collaborators.indian || [];
 
-                    const { firstName, middleName, lastName } = parseAuthorName(authorName);
-                    const firstNameInput = authorsContainer.querySelector('input[name="author_first_names[]"]');
-                    const middleNameInput = authorsContainer.querySelector('input[name="author_middle_names[]"]');
-                    const lastNameInput = authorsContainer.querySelector('input[name="author_last_names[]"]');
-                    firstNameInput.value = firstName || '';
-                    middleNameInput.value = middleName || '';
-                    lastNameInput.value = lastName || '';
-                } else {
-                    form.style.display = 'none';
-                    chapterIdInput.value = '';
-                    titleInput.value = '';
-                    resetAuthorRows();
+                    [...foreignAuthors, ...indianAuthors].forEach(c => {
+                        if (c.author) {
+                            authorsContainer.insertAdjacentHTML('beforeend', createAuthorInput(c.author));
+                        }
+                    });
+                } catch (e) {
+                    console.warn('Invalid collaborations JSON');
                 }
+
+                updateButtonsVisibility();
             });
+            function createAuthorInput(name = '') {
+                return `
+                    <div class="row g-2 mb-3 author-row">
+                        <div class="col-lg-9">
+                            <input type="text" name="authors[]" class="form-control w-100" value="${name}" placeholder="Full Author Name">
+                        </div>
+                        <div class="col-lg-3">
+                            <button type="button" class="btn btn-primary btn-add-author"><i class="fa-solid fa-plus"></i></button>
+                            <button type="button" class="btn btn-danger btn-remove-author" style="display: none;"><i class="fa-solid fa-minus"></i></button>
+                        </div>
+                    </div>
+                `;
+            }
         }
 
         function updateButtonsVisibility() {
@@ -280,30 +215,20 @@
                 chapter_title: "{{ __('Title of the chapter') }}",
                 page: "{{ __('Page Number') }}",
                 doi: "{{ __('DOI') }}",
-                author_foreign: "{{ __('Foreign Author Name') }}",
-                affiliation_foreign: "{{ __('Foreign Affiliation') }}",
-                author_indian: "{{ __('Indian Author Name') }}",
-                affiliation_indian: "{{ __('Indian Affiliation') }}",
                 percentile: "{{ __('Percentile') }}"
             };
 
             let hasError = false;
 
             // Validate all author first names
-            const authorFirstNames = document.querySelectorAll('input[name="author_first_names[]"]');
-            const errorAuthor = document.getElementById('error-author');
-            authorFirstNames.forEach((input, index) => {
-                if (!input.value.trim()) {
-                    errorAuthor.textContent = "{{ __('Please enter the first name for author') }} " + (index + 1);
-                    hasError = true;
-                }
-            });
-            if (!hasError) {
-                errorAuthor.textContent = "";
-            }
-
-            const collaborationChecked = document.getElementById('collaborationCheckbox').checked;
-
+           const authorFullNames = document.querySelectorAll('input[name="authors[]"]');
+const errorAuthor = document.getElementById('error-author');
+authorFullNames.forEach((input, index) => {
+    if (!input.value.trim()) {
+        errorAuthor.textContent = "{{ __('Please enter the author name') }} " + (index + 1);
+        hasError = true;
+    }
+});
             Object.keys(fieldNames).forEach((id) => {
                 const input = document.getElementById(id);
                 const error = document.getElementById(`error-${id}`);
@@ -323,15 +248,6 @@
                         error.textContent = "";
                     }
                 });
-
-                // Only 'percentile' is optional
-                const isRequired = !isCollabField && id !== 'percentile';
-                if (isRequired && !input.value.trim()) {
-                    error.textContent = "{{ __('Please Enter The') }} " + fieldNames[id];
-                    hasError = true;
-                } else {
-                    error.textContent = "";
-                }
             });
 
             if (hasError) return;

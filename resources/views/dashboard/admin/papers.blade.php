@@ -28,7 +28,7 @@
                         <tr>
                             <th>{{ __('Id') }}</th>
                             <th>{{ __('Title') }}</th>
-                            <th>{{ __('Researcher') }}</th>
+                            <th>{{ __('Authors') }}</th>
                             <th>{{ __('Status') }}</th>
                             <th>{{ __('Review Comments') }}</th>
                             <th>{{ __('Assigned Reviewers') }}</th>
@@ -59,34 +59,41 @@
                                     </form>
                                 @endif
                             </td>
-                            <td>{{ $paper->user->name }}</td>
+                            <td>
+                            <strong>Main Author:</strong> {{ $paper->user->name }}<br>    @php
+                                    $collabs = $paper->collaborations ?? [];
+                                    $foreign = $collabs['foreign'] ?? [];
+                                    $indian = $collabs['indian'] ?? [];
+                                @endphp
+                                @if(count($foreign) || count($indian))
+                                    <strong>Co-Authors:</strong>
+                                    <ul class="mb-0 ps-3">
+                                        @foreach ($foreign as $f)
+                                            @if(!empty($f['author']))
+                                                {{ $f['author'] }} <small class="text-muted">(Foreign)</small>
+                                            @endif
+                                        @endforeach
+                                        @foreach ($indian as $i)
+                                            @if(!empty($i['author']))
+                                                {{ $i['author'] }} <small class="text-muted">(Indian)</small>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                    @endif
+                            </td>
                             <td>{{ ucwords(str_replace('_', ' ', $paper->status)) }}</td>
                             <td>
-                            @php
-                                $reviews = $paper->reviews;
-                                // Check if any review is still pending or resubmitted
-                                $isStillReviewing = $reviews->contains(fn($r) => in_array($r->status, ['pending', 'resubmitted']));
+                                @php
+                                    $reviews = $paper->reviews;
+                                @endphp
 
-                                $priorityStatus = ['revision_required', 'rejected', 'approved'];
-                                $relevantComment = null;
-
-                                if (!$isStillReviewing) {
-                                    foreach ($priorityStatus as $status) {
-                                        $filtered = $reviews->where('status', $status)->sortByDesc(fn($r) => strlen($r->comments));
-                                        if ($filtered->isNotEmpty()) {
-                                            $relevantComment =  $filtered->first()->comments;
-                                            break;
-                                        }
-                                    }
-                                }
-                            @endphp
-
-                            @if ($relevantComment)
-                                {{ $relevantComment }}
-                            @else
-                                <em>{{ __('Pending')}}</em>
-                            @endif
-                        </td>
+                                @if ($reviews->isEmpty())
+                                    <em>{{ __('Pending') }}</em>
+                                @else
+                                    @foreach ($reviews as $review)
+                                        {{ $review->comments }}
+                                    @endforeach
+                                @endif
                             <td>
                                 @forelse ($paper->reviews as $review)
                                     <div>{{ $review->reviewer->name }}</div>

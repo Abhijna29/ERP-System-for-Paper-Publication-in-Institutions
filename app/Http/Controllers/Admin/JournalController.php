@@ -86,40 +86,20 @@ class JournalController extends Controller
                 'issue' => 'nullable|string',
                 'page' => 'nullable|string',
                 'doi' => 'nullable|string',
-                'author_first_names' => 'required|array',
-                'author_first_names.*' => 'required|string',
-                'author_middle_names' => 'nullable|array',
-                'author_middle_names.*' => 'nullable|string',
-                'author_last_names' => 'nullable|array',
-                'author_last_names.*' => 'nullable|string',
                 'percentile' => 'nullable|string',
+                'authors' => 'required|array|min:1',
+                'authors.*' => 'required|string|max:255',
             ]);
 
-            // Build collaborations array
-            $collaborations = [
-                'foreign' => [
-                    'author' => $request->input('author_foreign'),
-                    'affiliation' => $request->input('affiliation_foreign'),
-                ],
-                'indian' => [
-                    'author' => $request->input('author_indian'),
-                    'affiliation' => $request->input('affiliation_indian'),
-                ],
-                'additional' => [], // Store additional authors here
-            ];
+            $authors = $request->input('authors', []);
+            $collaborations = [];
 
-            // Combine additional authors into full names
-            $firstNames = $request->input('author_first_names', []);
-            $middleNames = $request->input('author_middle_names', []);
-            $lastNames = $request->input('author_last_names', []);
-            foreach ($firstNames as $index => $firstName) {
-                $middle = !empty($middleNames[$index]) ? $middleNames[$index] . ' ' : '';
-                $last = !empty($lastNames[$index]) ? $lastNames[$index] : '';
-                $fullName = trim($firstName . ' ' . $middle . $last);
-                if ($fullName) {
-                    $collaborations['additional'][] = ['author' => $fullName];
+            foreach ($authors as $authorName) {
+                if (!empty($authorName)) {
+                    $collaborations['additional'][] = ['author' => trim($authorName)];
                 }
             }
+
 
             // Remove empty sections
             $collaborations = array_filter($collaborations, fn($section) => !empty($section['author']) || !empty($section));

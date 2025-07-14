@@ -58,13 +58,12 @@
                                 // }
                             @endphp
 
-                            {{-- @if ($relevantComment) --}}
-                            @if ($reviews)
-                                 @foreach ($reviews as $review)
-                                    <li>{{ $review->comments }}</li>
-                                @endforeach
+                             @if ($reviews->isEmpty())
+                                <em>{{ __('Pending') }}</em>
                             @else
-                                <em>{{ __('Pending')}}</em>
+                                @foreach ($reviews as $review)
+                                    {{ $review->comments }}
+                                @endforeach
                             @endif
                         </td>  
                         <td>

@@ -63,6 +63,36 @@ class BookChapterController extends Controller
 
         $filePath = $request->file('chapter_file')->store('book_chapters', 'public');
 
+        $foreignAuthors = $request->input('author_foreign', []);
+        $foreignAffiliations = $request->input('affiliation_foreign', []);
+        $indianAuthors = $request->input('author_indian', []);
+        $indianAffiliations = $request->input('affiliation_indian', []);
+
+        $foreign = [];
+        for ($i = 0; $i < count($foreignAuthors); $i++) {
+            if (!empty($foreignAuthors[$i]) || !empty($foreignAffiliations[$i])) {
+                $foreign[] = [
+                    'author' => $foreignAuthors[$i] ?? '',
+                    'affiliation' => $foreignAffiliations[$i] ?? '',
+                ];
+            }
+        }
+
+        $indian = [];
+        for ($i = 0; $i < count($indianAuthors); $i++) {
+            if (!empty($indianAuthors[$i]) || !empty($indianAffiliations[$i])) {
+                $indian[] = [
+                    'author' => $indianAuthors[$i] ?? '',
+                    'affiliation' => $indianAffiliations[$i] ?? '',
+                ];
+            }
+        }
+
+        $collaborations = [
+            'foreign' => $foreign,
+            'indian' => $indian,
+        ];
+
         $chapter = BookChapter::create([
             'user_id' => $user->id,
             'book_id' => $request->book_id,
@@ -71,6 +101,7 @@ class BookChapterController extends Controller
             'genre' => $request->genre,
             'file_path' => $filePath,
             'status' => 'submitted',
+            'collaborations' => $collaborations ?: null,
         ]);
 
         $researcher = Auth::user();

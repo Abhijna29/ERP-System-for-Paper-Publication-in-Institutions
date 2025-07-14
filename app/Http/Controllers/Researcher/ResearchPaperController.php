@@ -85,7 +85,7 @@ class ResearchPaperController extends Controller
             'category' => 'required|exists:categories,id',
             'subCategory' => 'required|exists:sub_categories,id',
             'childCategory' => 'required|exists:child_categories,id',
-            'paper_file' => ['required', 'mimes:pdf', 'max:20480']
+            'paper_file' => ['required', 'mimes:pdf', 'max:20480'],
         ]);
 
         // Clean up unused files
@@ -102,6 +102,36 @@ class ResearchPaperController extends Controller
         $filename = $titleSlug . '.' . $file->getClientOriginalExtension();
         $filePath = $file->storeAs('papers', $filename, 'public');
 
+        $foreignAuthors = $request->input('author_foreign', []);
+        $foreignAffiliations = $request->input('affiliation_foreign', []);
+        $indianAuthors = $request->input('author_indian', []);
+        $indianAffiliations = $request->input('affiliation_indian', []);
+
+        $foreign = [];
+        for ($i = 0; $i < count($foreignAuthors); $i++) {
+            if (!empty($foreignAuthors[$i]) || !empty($foreignAffiliations[$i])) {
+                $foreign[] = [
+                    'author' => $foreignAuthors[$i] ?? '',
+                    'affiliation' => $foreignAffiliations[$i] ?? '',
+                ];
+            }
+        }
+
+        $indian = [];
+        for ($i = 0; $i < count($indianAuthors); $i++) {
+            if (!empty($indianAuthors[$i]) || !empty($indianAffiliations[$i])) {
+                $indian[] = [
+                    'author' => $indianAuthors[$i] ?? '',
+                    'affiliation' => $indianAffiliations[$i] ?? '',
+                ];
+            }
+        }
+
+        $collaborations = [
+            'foreign' => $foreign,
+            'indian' => $indian,
+        ];
+
         // Save research paper
         $paper = ResearchPaper::create([
             'user_id' => $user->id,
@@ -113,6 +143,7 @@ class ResearchPaperController extends Controller
             'sub_category_id' => $request->subCategory,
             'child_category_id' => $request->childCategory,
             'status' => 'submitted',
+            'collaborations' => $collaborations ?: null,
         ]);
 
         $researcher = Auth::user();

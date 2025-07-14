@@ -38,7 +38,7 @@ use App\Http\Controllers\FaqPublicController;
 use App\Http\Controllers\Institution\InstitutionSubscriptionController;
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('auth.login');
 });
 
 Auth::routes();

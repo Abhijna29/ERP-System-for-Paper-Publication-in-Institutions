@@ -191,7 +191,7 @@
             legend: {
                 position: 'top',
                 horizontalAlign: 'right'
-            },
+            },  
             responsive: [{
                 breakpoint: 768,
                 options: {

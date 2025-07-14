@@ -56,16 +56,16 @@
 
         const fieldNames = {
        title: @json(__('Work Title')),
-    desc: @json(__('Work Description')),
-    year: @json(__('Year')),
-    number: @json(__('Publication Number')),
-    grant: @json(__('Grant Patent Number')),
-    copy_number: @json(__('Copyright Number')),
-    grant_number: @json(__('Grant Copyright Number')),
-    trade_number: @json(__('Trade Mark Number')),
-    grant_trade_number: @json(__('Grant Trade Mark Number')),
-    grant_design_number: @json(__('Grant Design Number'))
-    };
+        desc: @json(__('Work Description')),
+        year: @json(__('Year')),
+        number: @json(__('Publication Number')),
+        grant: @json(__('Grant Patent Number')),
+        copy_number: @json(__('Copyright Number')),
+        grant_number: @json(__('Grant Copyright Number')),
+        trade_number: @json(__('Trade Mark Number')),
+        grant_trade_number: @json(__('Grant Trade Mark Number')),
+        grant_design_number: @json(__('Grant Design Number'))
+        };
 
         let hasError = false;
         Object.keys(fieldNames).forEach((id) => {
@@ -90,7 +90,7 @@
         });
         if (hasError) return;
         form.reset();
-        Swal.fire(@json(__('Success!')), @json(__('Journal saved successfully!')), "success");
+        Swal.fire(@json(__('Success!')), @json(__('Saved successfully!')), "success");
     });
 </script>
 @endpush

@@ -78,8 +78,7 @@
                                 // $isStillReviewing = $reviews->contains(fn($r) => in_array($r->status, ['pending', 'resubmitted']));
 
                                 // $priorityStatus = ['revision_required', 'rejected', 'approved'];
-                                // $relevantComment = null;
-
+                                // $relevantComment = null;              
                                 // if (!$isStillReviewing) {
                                 //     foreach ($priorityStatus as $status) {
                                 //         $filtered = $reviews->where('status', $status)->sortByDesc(fn($r) => strlen($r->comments));
@@ -91,13 +90,14 @@
                                 // }
                             @endphp
 
-                           @if ($reviews)
-                                 @foreach ($reviews as $review)
-                                    <li>{{ $review->comments }}</li>
-                                @endforeach
+                           @if ($reviews->isEmpty())
+                                <em>{{ __('Pending') }}</em>
                             @else
-                                <em>{{ __('Pending')}}</em>
+                                @foreach ($reviews as $review)
+                                    {{ $review->comments }}
+                                @endforeach
                             @endif
+
                         </td>
                         <td>{{ $paper->category->name }}</td>
                         <td>{{ $paper->subCategory->name ?? "N/A"}}</td>
