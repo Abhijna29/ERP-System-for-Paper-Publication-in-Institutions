@@ -24,6 +24,8 @@ class NotificationController extends Controller
                     'paper_title' => $data['paper_title'] ?? null,
                     'created_at' => $notification->created_at->diffForHumans(),
                     'role' => Auth::user()->role,
+                    'patent_id' => $data['patent_id'] ?? null,
+                    'user_name' => $data['user_name'] ?? ($data['investors_name'] ?? 'Unknown'),
                     'link' => $data['link'] ?? '#'
                 ];
             }),

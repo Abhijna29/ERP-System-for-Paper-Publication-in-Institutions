@@ -207,27 +207,11 @@
     {{-- Intellectual Property --}}
     <li class="nav-item text-uppercase small text-muted mt-3">{{ __('Intellectual Property')}}</li>
     <li class="nav-item mb-1">
-        <a href="{{ route("patentFiled")}}" class="d-flex align-items-center gap-3
+        <a href="{{ route("admin.patents.index")}}" class="d-flex align-items-center gap-3
          fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('patentFiled') ? 'active' : ''}}">
+         {{Route::is('admin.patents.index') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
-        <span>{{__('Patent Filed') }}</span>
-        </a>
-    </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("patentPublished")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('patentPublished') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Patent Published') }}</span>
-        </a>
-    </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("patentGranted")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('patentGranted') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Patent Granted') }}</span>
+        <span>{{__('View Patents') }}</span>
         </a>
     </li>
     <li class="nav-item mb-1">

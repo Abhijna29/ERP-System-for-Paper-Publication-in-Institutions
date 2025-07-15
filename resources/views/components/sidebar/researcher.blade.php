@@ -53,6 +53,23 @@
         </a>
     </li>
     
+    <li class="nav-item text-uppercase small text-muted mt-3">{{ __('Intellectual Property')}}</li>
+    <li class="nav-item mb-2">
+        <a href="{{ route("researcher.patents.create")}}" class="d-flex align-items-center gap-3
+         fw-bold text-decoration-none p-2 ps-4 rounded-pill fs-5
+         {{Route::is('researcher.patents.create') ? 'active' : ''}}">
+        <i class="fa-solid fa-list"></i>         
+         <span>{{__('File Patents') }}</span>
+        </a>
+    </li>
+    <li class="nav-item mb-2">
+        <a href="{{ route("researcher.patents.index")}}" class="d-flex align-items-center gap-3
+         fw-bold text-decoration-none p-2 ps-4 rounded-pill fs-5
+         {{Route::is('researcher.patents.index') ? 'active' : ''}}">
+        <i class="fa-solid fa-list"></i>         
+         <span>{{__('View Patents Filed') }}</span>
+        </a>
+    </li>
 
     <li class="nav-item text-uppercase small text-muted mt-3">{{ __('Support')}}</li>
     <li class="nav-item mb-2">

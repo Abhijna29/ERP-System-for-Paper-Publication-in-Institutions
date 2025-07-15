@@ -9,6 +9,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\admin\AdminInvoiceController;
+use App\Http\Controllers\Admin\AdminPatentController;
 use App\Http\Controllers\admin\AdminPaymentReportController;
 use App\Http\Controllers\admin\ApproveController;
 use App\Http\Controllers\Admin\BookChapterAdminController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\Reviewer\ReviewerDashboardController;
 use App\Http\Controllers\SearchPaperController;
 use App\Http\Controllers\FaqPublicController;
 use App\Http\Controllers\Institution\InstitutionSubscriptionController;
+use App\Http\Controllers\Researcher\PatentsController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -71,6 +73,13 @@ Route::middleware(['auth', 'force.password.change', 'role:researcher'])->prefix(
     Route::get('/invoice/{id}/pay', [ResearcherController::class, 'payInvoice'])->name('researcher.invoice.pay');
     Route::post('/invoice/{id}/pay', [ResearcherController::class, 'submitInvoicePayment'])->name('researcher.invoice.pay.submit');
     Route::post('/researcher/invoice/pay/success/{id}', [ResearcherController::class, 'razorpaySuccess'])->name('researcher.invoice.razorpay.success');
+
+    // patents
+    Route::get('patents/create', [PatentsController::class, 'create'])->name('researcher.patents.create');
+    Route::post('patents', [PatentsController::class, 'store'])->name('researcher.patents.store');
+    Route::get('patents', [PatentsController::class, 'index'])->name('researcher.patents.index');
+    Route::post('/researcher/patents/{id}/upload-certificate', [PatentsController::class, 'uploadCertificate'])->name('researcher.patents.uploadCertificate');
+    Route::post('/researcher/patents/{id}/published', [PatentsController::class, 'markAsPublished'])->name('researcher.patents.markPublished');
 });
 
 Route::middleware(['auth', 'force.password.change', 'role:reviewer'])->prefix('reviewer')->group(function () {
@@ -151,25 +160,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/book-chapters/metadata', [BookChapterAdminController::class, 'storeBookChapter'])
         ->name('bookChapter.submit');
     Route::get('/dashboard/admin/book-chapters', [BookChapterAdminController::class, 'publishedChapter'])->name('admin.bookChapters.published');
-
-    // View a single chapter
     Route::get('/dashboard/admin/book-chapters/{id}', [BookChapterAdminController::class, 'showchapter'])->name('admin.chapter.view');
-
-    // Assign reviewers form
     Route::get('/dashboard/admin/book-chapters/{id}/assign', [BookChapterAdminController::class, 'showAssignForm'])->name('admin.chapter.assign.form');
-
-    // Assign reviewers submit (POST)
     Route::post('/dashboard/admin/book-chapters/{id}/assign', [BookChapterAdminController::class, 'assignReviewers'])->name('admin.chapter.assign.submit');
-
-    // Resolve flag
     Route::post('/dashboard/admin/review/flag/{id}/resolve', [BookChapterAdminController::class, 'resolveFlag'])->name('admin.chapter.flag.resolve');
 
-    // // Approve chapter (if you have this logic)
-    // Route::post('/dashboard/admin/book-chapters/{id}/approve', [BookChapterAdminController::class, 'approve'])->name('admin.chapter.approve');
+    Route::get('patents', [AdminPatentController::class, 'index'])->name('admin.patents.index');
+    Route::get('patents/{id}/edit', [AdminPatentController::class, 'edit'])->name('admin.patents.edit');
+    Route::patch('patents/{id}', [AdminPatentController::class, 'update'])->name('admin.patents.update');
 
-    Route::get('/dashboard/admin/patent_filed', [AdminController::class, 'patentFiled'])->name('patentFiled');
-    Route::get('/dashboard/admin/patent_published', [AdminController::class, 'patentPublished'])->name('patentPublished');
-    Route::get('/dashboard/admin/patent_granted', [AdminController::class, 'patentGranted'])->name('patentGranted');
     Route::get('/dashboard/admin/copyright_filed', [AdminController::class, 'copyrightFiled'])->name('copyrightFiled');
     Route::get('/dashboard/admin/copyright_published', [AdminController::class, 'copyrightPublished'])->name('copyrightPublished');
     Route::get('/dashboard/admin/copyright_granted', [AdminController::class, 'copyrightGranted'])->name('copyrightGranted');

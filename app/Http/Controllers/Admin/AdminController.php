@@ -24,19 +24,6 @@ class AdminController extends Controller
 
         return view('dashboard.admin.listOfPaper', compact('papers'));
     }
-
-    public function patentFiled()
-    {
-        return view('dashboard.admin.patentFiled');
-    }
-    public function patentPublished()
-    {
-        return view('dashboard.admin.patentPublished');
-    }
-    public function patentGranted()
-    {
-        return view('dashboard.admin.patentGranted');
-    }
     public function copyrightFiled()
     {
         return view('dashboard.admin.copyrightFiled');
