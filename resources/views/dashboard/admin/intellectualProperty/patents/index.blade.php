@@ -3,7 +3,7 @@
 @section('content')
 <div class="card bg-white border-0 rounded-4 shadow">
     <div class="card-body user-card">
-        <h5 class="card-title mb-3">All Patents</h5>
+        <h5 class="card-title mb-3">{{ __('View Patents')}}</h5>
         @if(session('success')) 
             <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -17,10 +17,10 @@
                 <table class="table table-bordered border-dark-subtle table-hover">
                     <thead class="custom-header">
                         <tr>
-                            <th>Title</th>
-                            <th>Inventor</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>{{ __('Title')}}</th>
+                            <th>{{ __('Inventor')}}</th>
+                            <th>{{ __('Status')}}</th>
+                            <th>{{ __('Actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,11 +32,11 @@
                                 <td>
                                     @if($patent->type === 'granted' && $patent->certificate_path)
                                         <a href="{{ asset('storage/' . $patent->certificate_path) }}" target="_blank" class="btn btn-sm btn-success">
-                                        View Certificate
+                                        {{ __('View Certificate')}}
                                         </a>
                                     @else
                                         <a href="{{ route('admin.patents.edit', $patent->id) }}" class="btn btn-sm btn-warning">
-                                            Edit
+                                            {{ __('Edit')}}
                                         </a>
                                     @endif
                                 </td>

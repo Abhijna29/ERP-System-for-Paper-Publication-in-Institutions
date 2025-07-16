@@ -41,7 +41,7 @@ class DesignRightController extends Controller
     public function adminIndex()
     {
         $designs = DesignRight::with('user')->get();
-        return view('dashboard.admin.intellectualProperty.designs', compact('designs'));
+        return view('dashboard.admin.intellectualProperty.designRights', compact('designs'));
     }
 
     public function updateStatus(Request $request, $id)

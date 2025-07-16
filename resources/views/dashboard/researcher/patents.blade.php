@@ -5,7 +5,7 @@
     <div class="col-md-10">
         <div class="card bg-white border-0 rounded-4 shadow">
             <div class="card-body user-card px-5">
-                <h5 class="card-title mb-3 fw-bold">{{ __('Patent Filed')}}</h5>
+                <h5 class="card-title mb-3 fw-bold">{{ __('File Patents')}}</h5>
                 @if(session('success')) 
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
@@ -36,7 +36,7 @@
                     </div>
 
                     @if($papers->count())
-                        <label>Link to Research Paper (optional)</label>
+                        <label>{{ __('Link to Research Paper (optional)')}}</label>
                         <select name="research_paper_id" class="form-select mb-2">
                             <option value="">-- None --</option>
                             @foreach($papers as $paper)
@@ -55,7 +55,7 @@
     <div class="col-md-10">
         <div class="card bg-white border-0 rounded-4 shadow">
             <div class="card-body user-card">
-                <h5 class="card-title mb-3">My Patented Works</h5>
+                <h5 class="card-title mb-3">{{ __('My Patented Works')}}</h5>
                 @if ($patents->isEmpty()) 
                         {{ __('No patents filed') }}
                     @else
@@ -63,31 +63,31 @@
                         <table class="table table-bordered border-dark-subtle table-hover">
                             <thead class="custom-header">
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>{{ __('Title')}}</th>
+                                    <th>{{ __('Status')}}</th>
+                                    <th>{{ __('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($patents as $patent)
                                     <tr>
                                         <td>{{ $patent->work_title }}</td>
-                                        <td><span class="badge bg-info">{{ ucfirst($patent->type) }}</span></td>
+                                        <td><span>{{ ucfirst($patent->type) }}</span></td>
                                         <td>
                                             @if($patent->type == 'filed')
                                             <form action="{{ route('researcher.patents.markPublished', $patent->id) }}" method="POST">
                                                 @csrf
                                                 <input type="text" name="publication_number" class="form-control mb-2" placeholder="Enter Publication Number" required>
-                                                <button class="btn btn-sm btn-success">Mark as Published</button>
+                                                <button class="btn btn-sm btn-success">{{ __('Mark as Published')}}</button>
                                             </form>
 
                                         @elseif($patent->certificate_path)
-                                            <a href="{{ asset('storage/' . $patent->certificate_path) }}" target="_blank">View Certificate</a>
+                                            <a href="{{ asset('storage/' . $patent->certificate_path) }}" target="_blank" class="btn btn-primary btn-sm">{{ __('View Certificate')}}</a>
                                         @else
                                             <form action="{{ route('researcher.patents.uploadCertificate', $patent->id) }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="file" name="certificate" class="form-control mb-1" required accept="application/pdf">
-                                                <button type="submit" class="btn btn-sm btn-primary">Upload Certificate</button>
+                                                <button type="submit" class="btn btn-sm btn-primary">{{ __('Upload Certificate')}}</button>
                                             </form>
                                         @endif
                                         </td>

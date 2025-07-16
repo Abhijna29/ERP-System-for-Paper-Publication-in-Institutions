@@ -3,11 +3,11 @@
 @section('content')
 <div class="card bg-white border-0 rounded-4 shadow">
     <div class="card-body user-card">
-        <h5 class="card-title mb-3">Edit Patent Status</h5>
+        <h5 class="card-title mb-3">{{ __('Edit Patent Status')}}</h5>
 
         @if($patent->certificate_path)
             <a href="{{ asset('storage/' . $patent->certificate_path) }}" target="_blank" class="btn btn-outline-secondary mb-2">
-                📎 View Uploaded Certificate (PDF)
+                📎 {{ __('View Uploaded Certificate (PDF)')}}
             </a>
         @endif
 
@@ -15,9 +15,9 @@
             @csrf @method('PATCH')
 
             <select name="type" class="form-select mb-2" id="type-select">
-                <option value="filed" {{ $patent->type == 'filed' ? 'selected' : '' }}>Filed</option>
-                <option value="published" {{ $patent->type == 'published' ? 'selected' : '' }}>Published</option>
-                <option value="granted" {{ $patent->type == 'granted' ? 'selected' : '' }}>Granted</option>
+                <option value="filed" {{ $patent->type == 'filed' ? 'selected' : '' }}>{{ __('Filed')}}</option>
+                <option value="published" {{ $patent->type == 'published' ? 'selected' : '' }}>{{ __('Published')}}</option>
+                <option value="granted" {{ $patent->type == 'granted' ? 'selected' : '' }}>{{ __('Granted')}}</option>
             </select>
 
             <div id="published-field" class="mb-2" style="display: none;">
@@ -30,7 +30,7 @@
                     value="{{ old('grant_number', $patent->grant_number) }}">
             </div>
 
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="submit" class="btn btn-success">{{ __('Update')}}</button>
         </form>
     </div>
 </div>

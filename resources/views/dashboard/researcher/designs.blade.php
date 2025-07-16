@@ -5,7 +5,7 @@
     <div class="col-md-10">
         <div class="card bg-white border-0 rounded-4 shadow">
             <div class="card-body user-card px-5">
-                <h5 class="card-title mb-3 fw-bold">Submit New Design</h5>
+                <h5 class="card-title mb-3 fw-bold">{{ __('File Design Rights')}}</h5>
                 @if(session('success'))  
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -40,7 +40,7 @@
                          <input type="file" name="design_file" id="design_file" class="form-control">
                         <div id="error-design_file" class="text-danger"></div>
                     </div>
-                    <button class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">{{ __('Submit')}}</button>
                 </form>
             </div>
         </div>
@@ -50,7 +50,7 @@
     <div class="col-md-10">
         <div class="card bg-white border-0 rounded-4 shadow">
             <div class="card-body user-card">
-                <h5 class="card-title mb-3">Your Design Submissions</h5>
+                <h5 class="card-title mb-3">{{ __('Your Design Submissions')}}</h5>
                 @if ($designs->isEmpty()) 
                         {{ __('No designs filed') }}
                     @else
@@ -58,9 +58,9 @@
                         <table class="table table-bordered border-dark-subtle table-hover">
                             <thead class="custom-header">
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                    <th>Certificate</th>
+                                    <th>{{ __('Title')}}</th>
+                                    <th>{{ __('Status')}}</th>
+                                    <th>{{ __('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,12 +70,12 @@
                                     <td>{{ ucfirst($design->status) }}</td>
                                     <td>
                                         @if($design->certificate_path)
-                                            <a href="{{ asset('storage/' . $design->certificate_path) }}" target="_blank" class="btn btn-primary btn-sm">View Certificate</a>
+                                            <a href="{{ asset('storage/' . $design->certificate_path) }}" target="_blank" class="btn btn-primary btn-sm">{{ __('View Certificate')}}</a>
                                             @else
                                             <form method="POST" action="{{ route('designs.uploadCertificate', $design->id) }}" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="file" name="certificate" class="form-control" required>
-                                                <button class="btn btn-sm btn-success mt-2">Upload Certificate</button>
+                                                <button class="btn btn-sm btn-success mt-2">{{ __('Upload Certificate')}}</button>
                                             </form>
                                         @endif
                                     </td>

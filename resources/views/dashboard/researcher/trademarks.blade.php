@@ -5,7 +5,7 @@
     <div class="col-md-10">
         <div class="card bg-white border-0 rounded-4 shadow">
             <div class="card-body user-card px-5">
-                <h5 class="card-title mb-3 fw-bold">Trademark Filed</h5>
+                <h5 class="card-title mb-3 fw-bold">{{ __('File Trademarks')}}</h5>
 
                 @if(session('success'))  
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -41,7 +41,7 @@
                        <input type="file" name="certificate" id="certificate" class="form-control">
                         <div id="error-certificate" class="text-danger"></div>
                     </div> 
-                    <button type="submit" class="btn btn-primary">Submit Trademark</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Submit')}}</button>
                 </form>
             </div>
         </div>
@@ -50,7 +50,7 @@
     <div class="col-md-10">
         <div class="card bg-white border-0 rounded-4 shadow">
             <div class="card-body user-card">
-                <h5 class="card-title mb-3">All trademarks</h5>
+                <h5 class="card-title mb-3">{{ __('All trademarks')}}</h5>
                 @if ($trademarks->isEmpty()) 
                         {{ __('No trademarks filed') }}
                     @else
@@ -58,9 +58,9 @@
                         <table class="table table-bordered border-dark-subtle table-hover">
                             <thead class="custom-header">
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                    <th>Certificate</th>
+                                    <th>{{ __('Title')}}</th>
+                                    <th>{{ __('Status')}}</th>
+                                    <th>{{ __('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,7 +70,7 @@
                                     <td>{{ ucfirst($trademark->status) }}</td>
                                     <td>
                                         @if($trademark->certificate_path)
-                                            <a href="{{ asset('storage/' . $trademark->certificate_path) }}" target="_blank" class="btn btn-primary btn-sm">View</a>
+                                            <a href="{{ asset('storage/' . $trademark->certificate_path) }}" target="_blank" class="btn btn-primary btn-sm">{{ __('View Certificate')}}</a>
                                         @else
                                             N/A
                                         @endif
@@ -92,7 +92,7 @@
     const form = document.getElementById("form");
     form.addEventListener("submit", function (e) {
     const fieldNames = {
-        title: @json(__('Trademark title')),
+        title: @json(__('Trademark Title')),
         description: @json(__('Trademark Description')),
         application_number: @json(__('Trademark Application Number')),
         application_date: @json(__('Trademark Application Date')),
