@@ -26,10 +26,6 @@ A Laravel-based Enterprise Resource Planning (ERP) system designed to streamline
 - Razorpay integration for secure payments
 - Controls submission & download limits
 
-### AI-Powered Tools
-- Review summary generation using OpenAI API
-- Future scope for plagiarism detection and recommendation systems
-
 ### Dashboard & Analytics
 - Role-specific dashboards with activity tracking
 - Charts showing submissions, reviews, deadlines, and statuses
@@ -39,9 +35,9 @@ A Laravel-based Enterprise Resource Planning (ERP) system designed to streamline
 ## 🛠️ Tech Stack
 
 - **Backend**: Laravel 10+
-- **Frontend**: Blade, Bootstrap 5, Tailwind (optional)
+- **Frontend**: Blade, Bootstrap 5, CSS
 - **Database**: MySQL
-- **Authentication**: Laravel Breeze / Sanctum
+- **Authentication**: Laravel UI
 - **Payments**: Razorpay
 - **AI Integration**: OpenAI API for review summarization
 
