@@ -24,44 +24,7 @@ class AdminController extends Controller
 
         return view('dashboard.admin.listOfPaper', compact('papers'));
     }
-    public function copyrightFiled()
-    {
-        return view('dashboard.admin.copyrightFiled');
-    }
-    public function copyrightPublished()
-    {
-        return view('dashboard.admin.copyrightPublished');
-    }
-    public function copyrightGranted()
-    {
-        return view('dashboard.admin.copyrightGranted');
-    }
-    public function tradeMarkFiled()
-    {
-        return view('dashboard.admin.tradeMarkFiled');
-    }
-    public function tradeMarkPublished()
-    {
-        return view('dashboard.admin.tradeMarkPublished');
-    }
-    public function tradeMarkGranted()
-    {
-        return view('dashboard.admin.tradeMarkGranted');
-    }
-    public function designFiled()
-    {
-        return view('dashboard.admin.designFiled');
-    }
-    public function designPublished()
-    {
-        return view('dashboard.admin.designPublished');
-    }
-    public function designGranted()
-    {
-        return view('dashboard.admin.designGranted');
-    }
 
-    // Assign reviewers
     public function index()
     {
         $today = Carbon::today();

@@ -20,10 +20,12 @@ use App\Http\Controllers\Admin\SubscriptionPlanController;
 use App\Http\Controllers\SupportTicketController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChildCategoryController;
+use App\Http\Controllers\CopyrightController;
 use App\Http\Controllers\Department\DepartmentDashboardController;
 use App\Http\Controllers\Department\DepartmentReviewController;
 use App\Http\Controllers\Department\DepartmentSubmissionController;
 use App\Http\Controllers\Department\DepartmentUserController;
+use App\Http\Controllers\DesignRightController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\Researcher\BookChapterController;
@@ -38,6 +40,7 @@ use App\Http\Controllers\SearchPaperController;
 use App\Http\Controllers\FaqPublicController;
 use App\Http\Controllers\Institution\InstitutionSubscriptionController;
 use App\Http\Controllers\Researcher\PatentsController;
+use App\Http\Controllers\TrademarksController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -75,11 +78,23 @@ Route::middleware(['auth', 'force.password.change', 'role:researcher'])->prefix(
     Route::post('/researcher/invoice/pay/success/{id}', [ResearcherController::class, 'razorpaySuccess'])->name('researcher.invoice.razorpay.success');
 
     // patents
-    Route::get('patents/create', [PatentsController::class, 'create'])->name('researcher.patents.create');
     Route::post('patents', [PatentsController::class, 'store'])->name('researcher.patents.store');
     Route::get('patents', [PatentsController::class, 'index'])->name('researcher.patents.index');
     Route::post('/researcher/patents/{id}/upload-certificate', [PatentsController::class, 'uploadCertificate'])->name('researcher.patents.uploadCertificate');
     Route::post('/researcher/patents/{id}/published', [PatentsController::class, 'markAsPublished'])->name('researcher.patents.markPublished');
+
+    //Trademarks
+    Route::get('/trademarks', [TrademarksController::class, 'index'])->name('trademarks.index');
+    Route::post('/trademarks/store', [TrademarksController::class, 'store'])->name('trademarks.store');
+
+    //Design Rights
+    Route::get('/designs', [DesignRightController::class, 'index'])->name('designs.index');
+    Route::post('/designs', [DesignRightController::class, 'store'])->name('designs.store');
+    Route::post('/designs/{id}/upload-certificate', [DesignRightController::class, 'uploadCertificate'])->name('designs.uploadCertificate');
+
+    Route::get('/copyrights', [CopyrightController::class, 'index'])->name('researcher.copyrights.index');
+    Route::post('/copyrights/store', [CopyrightController::class, 'store'])->name('researcher.copyrights.store');
+    Route::post('/copyrights/{id}/upload-certificate', [CopyrightController::class, 'uploadCertificate'])->name('researcher.copyrights.uploadCertificate');
 });
 
 Route::middleware(['auth', 'force.password.change', 'role:reviewer'])->prefix('reviewer')->group(function () {
@@ -165,19 +180,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/dashboard/admin/book-chapters/{id}/assign', [BookChapterAdminController::class, 'assignReviewers'])->name('admin.chapter.assign.submit');
     Route::post('/dashboard/admin/review/flag/{id}/resolve', [BookChapterAdminController::class, 'resolveFlag'])->name('admin.chapter.flag.resolve');
 
-    Route::get('patents', [AdminPatentController::class, 'index'])->name('admin.patents.index');
-    Route::get('patents/{id}/edit', [AdminPatentController::class, 'edit'])->name('admin.patents.edit');
-    Route::patch('patents/{id}', [AdminPatentController::class, 'update'])->name('admin.patents.update');
+    Route::get('/patents', [AdminPatentController::class, 'index'])->name('admin.patents.index');
+    Route::get('/patents/{id}/edit', [AdminPatentController::class, 'edit'])->name('admin.patents.edit');
+    Route::patch('/patents/{id}', [AdminPatentController::class, 'update'])->name('admin.patents.update');
 
-    Route::get('/dashboard/admin/copyright_filed', [AdminController::class, 'copyrightFiled'])->name('copyrightFiled');
-    Route::get('/dashboard/admin/copyright_published', [AdminController::class, 'copyrightPublished'])->name('copyrightPublished');
-    Route::get('/dashboard/admin/copyright_granted', [AdminController::class, 'copyrightGranted'])->name('copyrightGranted');
-    Route::get('/dashboard/admin/trade_mark_filed', [AdminController::class, 'tradeMarkFiled'])->name('tradeMarkFiled');
-    Route::get('/dashboard/admin/trade_mark_published', [AdminController::class, 'tradeMarkPublished'])->name('tradeMarkPublished');
-    Route::get('/dashboard/admin/trade_mark_granted', [AdminController::class, 'tradeMarkGranted'])->name('tradeMarkGranted');
-    Route::get('/dashboard/admin/design_filed', [AdminController::class, 'designFiled'])->name('designFiled');
-    Route::get('/dashboard/admin/design_published', [AdminController::class, 'designPublished'])->name('designPublished');
-    Route::get('/dashboard/admin/design_granted', [AdminController::class, 'designGranted'])->name('designGranted');
+    Route::get('/copyrights', [CopyrightController::class, 'adminIndex'])->name('admin.copyrights.index');
+    Route::post('/copyrights/{id}/mark-registered', [CopyrightController::class, 'updateStatus'])->name('admin.copyrights.update');
+
+    Route::get('/admin/trademarks', [TrademarksController::class, 'adminIndex'])->name('admin.trademarks.index');
+    Route::post('/admin/trademarks/{id}/status', [TrademarksController::class, 'updateStatus'])->name('admin.trademarks.updateStatus');
+
+    Route::get('/admin/designs', [DesignRightController::class, 'adminIndex'])->name('admin.designs.index');
+    Route::post('/admin/designs/{id}/status', [DesignRightController::class, 'updateStatus'])->name('designs.updateStatus');
 
     Route::get('/papers', [AdminController::class, 'index'])->name('admin.papers');
     Route::get('/papers/{id}/assignReviewers', [AdminController::class, 'showAssignForm'])->name('admin.assign.form');

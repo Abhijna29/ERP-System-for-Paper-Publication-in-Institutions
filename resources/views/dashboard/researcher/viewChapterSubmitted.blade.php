@@ -6,8 +6,7 @@
     @if(session('submitted'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>{{ __('Success!')}}</strong> {{ __('Your chapter has been submitted.')}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>      
         </div>
     @endif
 

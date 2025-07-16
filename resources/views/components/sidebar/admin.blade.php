@@ -215,78 +215,31 @@
         </a>
     </li>
     <li class="nav-item mb-1">
-        <a href="{{ route("copyrightFiled")}}" class="d-flex align-items-center gap-3
+        <a href="{{ route("admin.copyrights.index")}}" class="d-flex align-items-center gap-3
          fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('copyrightFiled') ? 'active' : ''}}">
+         {{Route::is('admin.copyrights.index') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
-        <span>{{__('Copyright Filed') }}</span>
+        <span>{{__('View Copyrights') }}</span>
         </a>
     </li>
     <li class="nav-item mb-1">
-        <a href="{{ route("copyrightPublished")}}" class="d-flex align-items-center gap-3
+        <a href="{{ route("admin.trademarks.index")}}" class="d-flex align-items-center gap-3
          fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('copyrightPublished') ? 'active' : ''}}">
+         {{Route::is('admin.trademarks.index') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
-        <span>{{__('Copyright Published') }}</span>
+        <span>{{__('View Trademarks') }}</span>
         </a>
     </li>
     <li class="nav-item mb-1">
-        <a href="{{ route("copyrightGranted")}}" class="d-flex align-items-center gap-3
+        <a href="{{ route("admin.designs.index")}}" class="d-flex align-items-center gap-3
          fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('copyrightGranted') ? 'active' : ''}}">
+         {{Route::is('admin.designs.index') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
-        <span>{{__('Copyright Granted') }}</span>
+        <span>{{__('View Design Rights') }}</span>
         </a>
     </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("tradeMarkFiled")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('tradeMarkFiled') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Trade Mark Filed') }}</span>
-        </a>
-    </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("tradeMarkPublished")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('tradeMarkPublished') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Trade Mark Published') }}</span>
-        </a>
-    </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("tradeMarkGranted")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('tradeMarkGranted') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Trade Mark Granted') }}</span>
-        </a>
-    </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("designFiled")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('designFiled') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Design Filed') }}</span>
-        </a>
-    </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("designPublished")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('designPublished') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Design Published') }}</span>
-        </a>
-    </li>
-    <li class="nav-item mb-1">
-        <a href="{{ route("designGranted")}}" class="d-flex align-items-center gap-3
-         fw-bold text-decoration-none p-2 ps-4 rounded-pill
-         {{Route::is('designGranted') ? 'active' : ''}}">
-        <i class="fa-solid fa-list"></i>         
-        <span>{{__('Design Granted') }}</span>
-        </a>
-    </li>
-
+    
+    
     <li class="nav-item">
         <a  href="{{ route('logout') }}"
         onclick="event.preventDefault();

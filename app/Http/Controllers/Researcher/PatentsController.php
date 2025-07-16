@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PatentsController extends Controller
 {
-    public function create()
-    {
-        $papers = ResearchPaper::where('user_id', Auth::id())->get();
-        return view('dashboard.researcher.patents.create', compact('papers'));
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -44,8 +38,9 @@ class PatentsController extends Controller
 
     public function index(Request $request)
     {
+        $papers = ResearchPaper::where('user_id', Auth::id())->get();
         $patents = Patents::where('user_id', Auth::id())->get();
-        return view('dashboard.researcher.patents.index', compact('patents'));
+        return view('dashboard.researcher.patents', compact('patents', 'papers'));
     }
 
     public function uploadCertificate(Request $request, $id)

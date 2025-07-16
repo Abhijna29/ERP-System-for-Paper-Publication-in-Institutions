@@ -12,13 +12,13 @@ class AdminPatentController extends Controller
     public function index()
     {
         $patents = Patents::latest()->get();
-        return view('dashboard.admin.patents.index', compact('patents'));
+        return view('dashboard.admin.intellectualProperty.patents.index', compact('patents'));
     }
 
     public function edit($id)
     {
         $patent = Patents::findOrFail($id);
-        return view('dashboard.admin.patents.edit', compact('patent'));
+        return view('dashboard.admin.intellectualProperty.patents.edit', compact('patent'));
     }
 
     public function update(Request $request, $id)
