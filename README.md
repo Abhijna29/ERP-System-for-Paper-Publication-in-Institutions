@@ -32,7 +32,7 @@ A Laravel-based Enterprise Resource Planning (ERP) system designed to streamline
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend**: Laravel 10+
 - **Frontend**: Blade, Bootstrap 5, CSS
