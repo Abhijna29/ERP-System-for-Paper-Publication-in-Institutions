@@ -39,5 +39,4 @@ A Laravel-based Enterprise Resource Planning (ERP) system designed to streamline
 - **Database**: MySQL
 - **Authentication**: Laravel UI
 - **Payments**: Razorpay
-- **AI Integration**: OpenAI API for review summarization
 
