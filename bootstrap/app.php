@@ -9,6 +9,7 @@ return Application::configure(basePath: dirname(__DIR__))
         web: [
             __DIR__ . '/../routes/web.php',
 
+
         ],
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'force.password.change' => \App\Http\Middleware\ForcePasswordChange::class,
             'set.locale' => \App\Http\Middleware\SetLocale::class,
+            'prevent.back.history' => \App\Http\Middleware\PreventBackHistory::class,
         ]);
         $middleware->appendToGroup('web', \App\Http\Middleware\SetLocale::class);
     })

@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Models\BookChapter; // Don't forget this line
+use App\Models\BookChapter;
 
 class InstitutionDashboardController extends Controller
 {
@@ -46,7 +46,6 @@ class InstitutionDashboardController extends Controller
             ->where('institution_id', $institutionId)
             ->pluck('id');
 
-        // ✅ Metrics: Accepted
         $papersAccepted = ResearchPaper::whereIn('user_id', $researcherIds)
             ->where('status', 'published')
             ->whereBetween('updated_at', [$start, $end])
@@ -59,7 +58,6 @@ class InstitutionDashboardController extends Controller
 
         $totalAccepted = $papersAccepted + $chaptersAccepted;
 
-        // ✅ Metrics: Rejected
         $papersRejected = ResearchPaper::whereIn('user_id', $researcherIds)
             ->where('status', 'rejected')
             ->whereBetween('updated_at', [$start, $end])
@@ -72,13 +70,13 @@ class InstitutionDashboardController extends Controller
 
         $totalRejected = $papersRejected + $chaptersRejected;
 
-        // ✅ Researchers Registered
+        //Researchers Registered
         $registeredResearchers = User::where('role', 'researcher')
             ->where('institution_id', $institutionId)
             ->whereBetween('created_at', [$start, $end])
             ->count();
 
-        // ✅ Previous period for growth comparison
+        //Previous period for growth comparison
         $prevAccepted = ResearchPaper::whereIn('user_id', $researcherIds)
             ->where('status', 'published')
             ->whereBetween('updated_at', [$prevStart, $prevEnd])
@@ -102,12 +100,12 @@ class InstitutionDashboardController extends Controller
             ->whereBetween('created_at', [$prevStart, $prevEnd])
             ->count();
 
-        // ✅ Growth
+        //Growth
         $acceptedGrowth = $prevAccepted > 0 ? round((($totalAccepted - $prevAccepted) / $prevAccepted) * 100, 2) : ($totalAccepted > 0 ? 100 : 0);
         $rejectedGrowth = $prevRejected > 0 ? round((($totalRejected - $prevRejected) / $prevRejected) * 100, 2) : ($totalRejected > 0 ? 100 : 0);
         $researcherGrowth = $prevResearchers > 0 ? round((($registeredResearchers - $prevResearchers) / $prevResearchers) * 100, 2) : ($registeredResearchers > 0 ? 100 : 0);
 
-        // ✅ Chart Data (Last 10 days)
+        //Chart Data (Last 10 days)
         $days = collect(range(9, 0))->map(fn($i) => Carbon::now()->subDays($i)->format('Y-m-d'));
 
         $chartAccepted = $days->map(

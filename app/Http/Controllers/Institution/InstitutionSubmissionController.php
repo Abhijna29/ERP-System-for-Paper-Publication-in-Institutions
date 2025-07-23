@@ -15,12 +15,10 @@ class InstitutionSubmissionController extends Controller
     {
         $institutionId = Auth::user()->id;
 
-        // Fetch departments for the institution
         $departments = User::where('role', 'department')
             ->where('institution_id', $institutionId)
             ->get();
 
-        // Choose model and relationships based on type
         if ($type === 'chapter') {
             $model = BookChapter::query()->with(['book', 'user']);
             $researcherRelation = 'user';
@@ -29,26 +27,22 @@ class InstitutionSubmissionController extends Controller
             $researcherRelation = 'researcher';
         }
 
-        // Filter by institution
         $model->whereHas($researcherRelation, function ($query) use ($institutionId) {
             $query->where('institution_id', $institutionId);
         });
 
-        // Department filter
         if ($request->filled('department')) {
             $model->whereHas($researcherRelation, function ($query) use ($request) {
                 $query->where('department_id', $request->department);
             });
         }
 
-        // Status filter
         if ($request->filled('status')) {
             $model->where('status', $request->status);
         }
 
         $submissions = $model->orderBy('created_at', 'desc')->get();
 
-        // Choose view based on type
         $view = $type === 'chapter'
             ? 'dashboard.institution.chapters.index'
             : 'dashboard.institution.papers.index';

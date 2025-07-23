@@ -50,7 +50,7 @@ class InstitutionDepartmentController extends Controller
     {
         $user = User::where('id', $id)
             ->where('role', 'department')
-            ->where('institution_id', Auth::user()->id) // ✅ Restrict access
+            ->where('institution_id', Auth::user()->id)
             ->firstOrFail();
 
         $validator = Validator::make($request->all(), [

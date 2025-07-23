@@ -17,9 +17,8 @@ class InstitutionUserController extends Controller
 {
     public function index()
     {
-        $institutionId = Auth::user()->id; // assuming institution is logged in user
+        $institutionId = Auth::user()->id;
 
-        // Fetch users with role 'department' belonging to this institution
         $departments = User::where('role', 'department')
             ->where('institution_id', $institutionId)
             ->get();

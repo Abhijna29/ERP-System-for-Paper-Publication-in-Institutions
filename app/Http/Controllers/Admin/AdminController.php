@@ -11,10 +11,6 @@ use App\Notifications\ReviewDeadlineNotification;
 use App\Notifications\ReviewerAssignedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -78,10 +74,9 @@ class AdminController extends Controller
                 return $reviewer;
             })
             ->sortBy('total_active_reviews')
-            ->values(); // reindex after sorting
+            ->values();
 
         $assignedReviewers = $paper->reviews->pluck('reviewer_id')->toArray();
-        // $journals = Journal::all();
 
         return view('dashboard.admin.assignReviewer', [
             'submission' => $paper,
@@ -97,8 +92,8 @@ class AdminController extends Controller
             'reviewers' => 'array|max:3',
             'reviewers.*' => 'exists:users,id',
             'deadlines' => 'array',
-            // 'deadlines.*' => 'nullable|date|after:today'
-            'deadlines.*' => 'nullable|date|after_or_equal:today'
+            'deadlines.*' => 'nullable|date|after:today'
+            // 'deadlines.*' => 'nullable|date|after_or_equal:today'
         ]);
 
         $paper = ResearchPaper::findOrFail($id);
@@ -113,7 +108,7 @@ class AdminController extends Controller
         $newAssignments = [];
 
         foreach ($selectedReviewerIds as $reviewerId) {
-            $deadline = $deadlines[$reviewerId] ?? now()->addDays(7); // Default 7 days
+            $deadline = $deadlines[$reviewerId] ?? now()->addDays(7);
 
             $review = Review::firstOrCreate(
                 [
@@ -132,8 +127,6 @@ class AdminController extends Controller
                 $newAssignments[] = $reviewerId;
             }
         }
-
-        // Notify newly assigned reviewers
         foreach ($newAssignments as $reviewerId) {
             $reviewer = User::find($reviewerId);
             $reviewer->notify(new ReviewerAssignedNotification($paper, 'paper'));
@@ -175,7 +168,6 @@ class AdminController extends Controller
             $paper->status = 'revision_required';
             $paper->save();
             $review->save();
-            //notify the researcher when the paper is updated by admin(resolve,reject, revision required)
             $researcher->notify(new PaperStatusUpdated($paper, 'requested for revision', 'paper'));
 
             return back()->with('success', 'Revision requested from researcher.');

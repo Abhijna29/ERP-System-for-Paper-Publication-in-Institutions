@@ -254,8 +254,8 @@ class BookChapterAdminController extends Controller
             'reviewers' => 'array|max:3',
             'reviewers.*' => 'exists:users,id',
             'deadlines' => 'array',
-            // 'deadlines.*' => 'nullable|date|after:today'
-            'deadlines.*' => 'nullable|date|after_or_equal:today'
+            'deadlines.*' => 'nullable|date|after:today'
+            // 'deadlines.*' => 'nullable|date|after_or_equal:today'
         ]);
 
         $chapter = BookChapter::findOrFail($id);
@@ -331,7 +331,6 @@ class BookChapterAdminController extends Controller
             $chapter->save();
             $review->save();
 
-            //notify the researcher when the chapter is updated by admin(resolve,reject, revision required)
             $researcher->notify(new PaperStatusUpdated($chapter, 'requested for revision', 'chapter'));
 
             return back()->with('success', 'Revision requested from researcher.');

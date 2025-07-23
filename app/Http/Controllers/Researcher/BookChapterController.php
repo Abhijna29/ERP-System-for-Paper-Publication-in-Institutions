@@ -29,7 +29,6 @@ class BookChapterController extends Controller
             ->latest()
             ->first();
 
-        // Pass a flag if no subscription
         $hasSubscription = $subscription !== null;
         return view('dashboard.researcher.submitBookChapter', compact('books', 'genres', 'subscription', 'hasSubscription'));
     }
@@ -48,7 +47,6 @@ class BookChapterController extends Controller
             return redirect()->back()->with('error', 'Your institution does not have an active subscription. Please contact your institution administrator.');
         }
 
-        // Check paper submission limit
         if ($subscription->papers_used >= $subscription->plan->paper_limit) {
             return redirect()->back()->with('error', 'Your institution has reached its submission limit.');
         }

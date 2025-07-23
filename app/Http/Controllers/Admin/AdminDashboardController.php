@@ -12,9 +12,8 @@ class AdminDashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $filter = $request->input('filter', 'month'); // default to 'month'
+        $filter = $request->input('filter', 'month');
 
-        // Set current and previous period based on filter
         switch ($filter) {
             case 'today':
                 $start = Carbon::today();

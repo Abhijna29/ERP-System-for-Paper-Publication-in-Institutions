@@ -38,33 +38,21 @@
                         <td>{{ $chapter->book->title }}</td>
                         <td>{{ $chapter->genre}}</td>
                         <td>
-                            @php
-                                $reviews = $chapter->reviews;
-                                // // Check if any review is still pending or resubmitted
-                                // $isStillReviewing = $reviews->contains(fn($r) => in_array($r->status, ['pending', 'resubmitted']));
+                                @php
+                                    $reviews = $chapter->reviews;
+                                    $hasComments = $reviews->whereNotNull('comments')->where('comments', '!=', '')->isNotEmpty();
+                                @endphp
 
-                                // $priorityStatus = ['revision_required', 'rejected', 'approved'];
-                                // $relevantComment = null;
-
-                                // if (!$isStillReviewing) {
-                                //     foreach ($priorityStatus as $status) {
-                                //         $filtered = $reviews->where('status', $status);
-                                       
-                                //             $relevantComment =  $filtered->comments;
-                                            
-                                //         }
-                                //     }
-                                // }
-                            @endphp
-
-                             @if ($reviews->isEmpty())
-                                <em>{{ __('Pending') }}</em>
-                            @else
-                                @foreach ($reviews as $review)
-                                    {{ $review->comments }}
-                                @endforeach
-                            @endif
-                        </td>  
+                                @if (!$hasComments)
+                                    <em>{{ __('Pending') }}</em>
+                                @else
+                                    @foreach ($reviews as $review)
+                                        @if($review->comments)
+                                            <div>{{ $review->comments }}</div>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </td> 
                         <td>
                             @if($chapter->status == 'submitted')
                                 <span class="text-dark">{{ __('Submitted')}}</span>

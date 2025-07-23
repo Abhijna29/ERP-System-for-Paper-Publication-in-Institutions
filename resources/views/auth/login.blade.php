@@ -13,7 +13,7 @@
                     <div class="col-lg-7 my-4 d-flex align-items-center">
                         <div class="col p-4 p-md-0 m-0 mx-md-3">
                             <p class="text-center mb-4 me-2 fs-4">{{ __('Innovation Starts with You — Log in Now!') }}</p>
-                            <form method="POST" action="{{ route('login') }}">
+                            <form method="POST" action="{{ route('login') }}" autocomplete="off">
                                 @csrf
 
                                 <div class="row mb-3">

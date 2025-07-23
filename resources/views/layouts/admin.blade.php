@@ -22,6 +22,11 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body>
+    @php
+        header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        header("Pragma: no-cache"); // HTTP 1.0.
+        header("Expires: 0"); // Proxies.
+    @endphp
     <div id="app">
         @include('components.navbar.dashboardNavbar')
         <div class="container-fluid">
@@ -48,21 +53,5 @@
     </div>
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof bootstrap === 'undefined') {
-                console.log('Bootstrap JavaScript is not loaded');
-            } else {
-                console.log('Bootstrap JavaScript is loaded:', bootstrap);
-                const testDropdown = document.querySelector('[data-bs-toggle="dropdown"]');
-                if (testDropdown) {
-                    const bsDropdown = new bootstrap.Dropdown(testDropdown);
-                    console.log('Test Dropdown Initialized:', bsDropdown);
-                } else {
-                    console.log('No dropdown toggle found');
-                }
-            }
-        });
-    </script> --}}
 </body>
 </html>

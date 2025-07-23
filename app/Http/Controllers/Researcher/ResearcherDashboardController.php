@@ -18,7 +18,6 @@ class ResearcherDashboardController extends Controller
     {
         $filter = $request->input('filter', 'month');
 
-        // Define date ranges
         switch ($filter) {
             case 'today':
                 $start = Carbon::today();

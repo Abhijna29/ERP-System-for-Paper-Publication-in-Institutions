@@ -55,7 +55,7 @@ Route::middleware(['auth', 'force.password.change'])->group(function () {
     Route::post('/notification/mark-as-one-read/{id}', [NotificationController::class, 'markSingleAsRead'])->name('notifications.markOne');
 });
 
-Route::middleware(['auth', 'force.password.change', 'role:researcher'])->prefix('researcher')->group(function () {
+Route::middleware(['auth', 'force.password.change', 'role:researcher', 'prevent.back.history'])->prefix('researcher')->group(function () {
     Route::get('/', [ResearcherDashboardController::class, 'index'])->name('researcher.dashboard');
     Route::get('/create', [ResearchPaperController::class, 'create'])->name('papers.create');
     Route::post('/papers', [ResearchPaperController::class, 'store'])->name('papers.store');
@@ -97,7 +97,7 @@ Route::middleware(['auth', 'force.password.change', 'role:researcher'])->prefix(
     Route::post('/copyrights/{id}/upload-certificate', [CopyrightController::class, 'uploadCertificate'])->name('researcher.copyrights.uploadCertificate');
 });
 
-Route::middleware(['auth', 'force.password.change', 'role:reviewer'])->prefix('reviewer')->group(function () {
+Route::middleware(['auth', 'force.password.change', 'role:reviewer', 'prevent.back.history'])->prefix('reviewer')->group(function () {
     Route::get('/', [ReviewerDashboardController::class, 'index'])->name('reviewer.dashboard');
     Route::get('/reviews/{type}', [ReviewerController::class, 'index'])
         ->name('reviewer.reviews')
@@ -115,7 +115,7 @@ Route::middleware(['auth', 'force.password.change', 'role:reviewer'])->prefix('r
 });
 Route::get('/admin/institution/list/', [InstituteController::class, 'getInstitutions'])->name('institution.list');
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin', 'prevent.back.history'])->group(function () {
     Route::get('/dashboard/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/dashboard/admin/createInstitution', [InstituteController::class, 'index'])->name('createInstitution');
@@ -206,7 +206,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/subscription/{id}', [SubscriptionPlanController::class, 'destroy'])->name('admin.subscription.delete');
 });
 
-Route::middleware(['auth', 'force.password.change', 'role:institution'])->prefix('institution')->group(function () {
+Route::middleware(['auth', 'force.password.change', 'role:institution', 'prevent.back.history'])->prefix('institution')->group(function () {
     Route::get('/', [InstitutionDashboardController::class, 'index'])->name('institute.dashboard');
 
     // Department Management
@@ -239,7 +239,7 @@ Route::middleware(['auth', 'force.password.change', 'role:institution'])->prefix
     Route::get('/subscribe-required', [InstitutionSubscriptionController::class, 'redirectToSubscription'])->name('papers.redirectToSubscription');
 });
 
-Route::middleware(['auth', 'force.password.change', 'role:department'])->prefix('department')->group(function () {
+Route::middleware(['auth', 'force.password.change', 'role:department', 'prevent.back.history'])->prefix('department')->group(function () {
     Route::get('/', [DepartmentDashboardController::class, 'index'])->name('department.dashboard');
 
     Route::get('/users', [DepartmentUserController::class, 'index'])->name('department.users');

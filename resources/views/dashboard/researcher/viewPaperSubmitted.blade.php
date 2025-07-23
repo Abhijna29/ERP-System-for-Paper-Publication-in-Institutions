@@ -71,34 +71,21 @@
 
                         </td>
                         <td>
-                            @php
-                                $reviews = $paper->reviews;
+                                @php
+                                    $reviews = $paper->reviews;
+                                    $hasComments = $reviews->whereNotNull('comments')->where('comments', '!=', '')->isNotEmpty();
+                                @endphp
 
-                                // // Check if any review is still pending or resubmitted
-                                // $isStillReviewing = $reviews->contains(fn($r) => in_array($r->status, ['pending', 'resubmitted']));
-
-                                // $priorityStatus = ['revision_required', 'rejected', 'approved'];
-                                // $relevantComment = null;              
-                                // if (!$isStillReviewing) {
-                                //     foreach ($priorityStatus as $status) {
-                                //         $filtered = $reviews->where('status', $status)->sortByDesc(fn($r) => strlen($r->comments));
-                                //         if ($filtered->isNotEmpty()) {
-                                //             $relevantComment =  $filtered->first()->comments;
-                                //             break;
-                                //         }
-                                //     }
-                                // }
-                            @endphp
-
-                           @if ($reviews->isEmpty())
-                                <em>{{ __('Pending') }}</em>
-                            @else
-                                @foreach ($reviews as $review)
-                                    {{ $review->comments }}
-                                @endforeach
-                            @endif
-
-                        </td>
+                                @if (!$hasComments)
+                                    <em>{{ __('Pending') }}</em>
+                                @else
+                                    @foreach ($reviews as $review)
+                                        @if($review->comments)
+                                            <div>{{ $review->comments }}</div>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </td>
                         <td>{{ $paper->category->name }}</td>
                         <td>{{ $paper->subCategory->name ?? "N/A"}}</td>
                         <td>{{ $paper->childCategory->name }}</td>

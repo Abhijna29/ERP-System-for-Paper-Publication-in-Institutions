@@ -85,15 +85,19 @@
                             <td>
                                 @php
                                     $reviews = $paper->reviews;
+                                    $hasComments = $reviews->whereNotNull('comments')->where('comments', '!=', '')->isNotEmpty();
                                 @endphp
 
-                                @if ($reviews->isEmpty())
+                                @if (!$hasComments)
                                     <em>{{ __('Pending') }}</em>
                                 @else
                                     @foreach ($reviews as $review)
-                                        {{ $review->comments }}
+                                        @if($review->comments)
+                                            <div>{{ $review->comments }}</div>
+                                        @endif
                                     @endforeach
                                 @endif
+                            </td>
                             <td>
                                 @forelse ($paper->reviews as $review)
                                     <div>{{ $review->reviewer->name }}</div>

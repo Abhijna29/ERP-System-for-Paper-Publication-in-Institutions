@@ -220,7 +220,6 @@ class ResearchPaperController extends Controller
             }
         }
 
-
         // return back()->with('success', 'Paper resubmitted successfully.');
         return redirect()->route('papers.submitted')->with('submitted', true)->with('paper', $paper);
     }
