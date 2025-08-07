@@ -15,18 +15,20 @@
 @extends($layout)
 
 @section('content')
-<div class="container py-4">
-    <h4>Pay ₹ {{ $plan->price }} to subscribe to {{ $plan->name }}</h4>
-    <p>Base Price: ₹{{ number_format($plan->price, 2) }}</p>
-    <p>GST (18%): ₹{{ number_format($plan->price * 0.18, 2) }}</p>
-    <p><strong>Total: ₹{{ number_format($plan->price + ($plan->price * 0.18), 2) }}</strong></p>
+<div class="card bg-white border-0 rounded-4 shadow">
+    <div class="card-body user-card">
+        <h5 class="card-title mb-4">Pay ₹ {{ $plan->price }} to subscribe to {{ $plan->name }}</h5>
+        <p>Base Price: ₹{{ number_format($plan->price, 2) }}</p>
+        <p>GST (18%): ₹{{ number_format($plan->price * 0.18, 2) }}</p>
+        <p><strong>Total: ₹{{ number_format($plan->price + ($plan->price * 0.18), 2) }}</strong></p>
 
-    <button id="rzp-button1" class="btn btn-success">{{ __('Pay with')}} Razorpay</button>
+        <button id="rzp-button1" class="btn btn-success">{{ __('Pay with')}} Razorpay</button>
 
-    <form id="payment-form" action="{{ route('subscription.payment.success') }}" method="POST" style="display: none;">
-        @csrf
-        <input type="hidden" name="payment_id" id="payment_id">
-    </form>
+        <form id="payment-form" action="{{ route('subscription.payment.success') }}" method="POST" style="display: none;">
+            @csrf
+            <input type="hidden" name="payment_id" id="payment_id">
+        </form>
+    </div>   
 </div>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

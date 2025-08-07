@@ -148,14 +148,14 @@
         <span>{{__('Invoice') }}</span>
         </a>
     </li>
-    <li class="nav-item mb-1">
+    {{-- <li class="nav-item mb-1">
         <a href="{{ route("admin.paymentReport")}}" class="d-flex align-items-center gap-3
          fw-bold text-decoration-none p-2 ps-4 rounded-pill
          {{Route::is('admin.paymentReport') ? 'active' : ''}}">
         <i class="fa-solid fa-list"></i>         
         <span>{{__('Payment Report') }}</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item mb-1">
         <a href="{{ route("admin.subscription.index")}}" class="d-flex align-items-center gap-3
          fw-bold text-decoration-none p-2 ps-4 rounded-pill

@@ -26,7 +26,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $chapter->chapter_title }}</td>
                                 <td>{{ $chapter->all_authors }}</td>
-                                <td>{{ $chapter->chapter_publication_date }}</td>
+                                <td>{{ $chapter->chapter_publication_date}}</td>
                                 <td>
                                     <a href="{{ route('admin.chapter.view', $chapter->id) }}" class="btn btn-warning btn-sm mb-2">{{ __('View chapter') }}</a>
                                 </td>
